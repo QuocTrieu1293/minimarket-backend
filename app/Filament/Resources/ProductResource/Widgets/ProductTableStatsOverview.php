@@ -8,6 +8,7 @@ use App\Filament\CustomStat\MyStat;
 use App\Models\Product;
 use Filament\Widgets\Concerns\InteractsWithPageTable;
 use App\Filament\Resources\ProductResource\Pages\ListProducts;
+use App\Models\Filament\ProductFilament;
 
 class ProductTableStatsOverview extends BaseWidget
 {
@@ -25,7 +26,7 @@ class ProductTableStatsOverview extends BaseWidget
     {
         return [
             // Stat::make('Tổng số sản phẩm', Product::count()),
-            MyStat::make('Tổng số sản phẩm', Product::count())
+            MyStat::make('Tổng số sản phẩm', ProductFilament::count())
             
             ,MyStat::make('Đang hiển thị', $this->getPageTableQuery()->count())
             

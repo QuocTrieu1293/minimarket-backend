@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Filament\ProductFilament;
 use App\Models\Unit;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -62,7 +62,7 @@ require_once app_path('MyHelper/helpers.php');
 
 class ProductResource extends Resource
 {
-    protected static ?string $model = Product::class;
+    protected static ?string $model = ProductFilament::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -542,7 +542,7 @@ class ProductResource extends Resource
                                 ->falseIcon('heroicon-m-eye-slash')
                                 ->falseColor('danger')
                                 ->tooltip(
-                                    fn(Product $record) : string => $record->is_visible?"Hiển thị":"Không được hiển thị"
+                                    fn(ProductFilament $record) : string => $record->is_visible?"Hiển thị":"Không được hiển thị"
                                 )
                                 ->grow(false)
 
@@ -552,7 +552,7 @@ class ProductResource extends Resource
                                 ->alignRight()
                                 ->grow(false)
                                 ->tooltip(
-                                    fn(Product $record) => $record->is_featured?'featured':'not featured'
+                                    fn(ProductFilament $record) => $record->is_featured?'featured':'not featured'
                                 )
 
                         ])->columnSpan('full')
