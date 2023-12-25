@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryGroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +75,22 @@ Route::prefix('danhmucnho')->name('category.')->group(function() {
         }
     })
     ->name('brands');
+});
+
+Route::prefix('giohang')->name('cart.')->group(function() {
+    $controller = CartController::class;
+
+    Route::prefix('/{id}')->group(function() use($controller) {
+        Route::get('/', [$controller, 'getItems'])
+            ->name('items');
+        Route::delete('/xoa', [$controller, 'deleteItems'])
+            ->name('items-delete');
+    });
+    Route::post('/them', [$controller, 'addItem'])
+        ->name('item-add');
+    Route::put('capnhat/{id}', [$controller, 'updateItem']) //cartItemId
+        ->name('item-update');
+    
 });
 
 Route::post('test', function(Request $request) {

@@ -15,16 +15,16 @@ class Cart extends Model
     public $timestamps = false;
     protected $attributes = [
         'quantity' => 0,
-        'total_price' => 0,
+        'total' => 0,
         'savings' => 0
     ];
     protected $casts = [
         'quantity' => 'integer',
-        'total_price' => 'float',
+        'total' => 'float',
         'savings' => 'float'
     ];
     protected $fillable = [
-        'quantity', 'total_price', 'savings', 'user_id'
+        'quantity', 'total', 'savings', 'user_id'
     ];
 
     public function cart_items() : HasMany {
