@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 25, 2023 at 07:55 AM
+-- Generation Time: Dec 25, 2023 at 09:50 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -132,9 +132,9 @@ INSERT INTO `brand` (`id`, `name`, `thumbnail`) VALUES
 CREATE TABLE `cart` (
   `id` int(10) UNSIGNED NOT NULL,
   `quantity` int(10) UNSIGNED DEFAULT 0,
-  `total_price` decimal(10,2) UNSIGNED DEFAULT 0.00,
+  `total` decimal(10,2) UNSIGNED DEFAULT 0.00,
   `savings` decimal(10,2) UNSIGNED DEFAULT 0.00,
-  `user_id` int(10) UNSIGNED DEFAULT NULL
+  `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -146,37 +146,55 @@ CREATE TABLE `cart` (
 CREATE TABLE `cart_item` (
   `id` int(10) UNSIGNED NOT NULL,
   `quantity` int(10) UNSIGNED DEFAULT 1,
-  `total_price` decimal(10,2) UNSIGNED DEFAULT NULL,
+  `total` decimal(10,2) UNSIGNED DEFAULT NULL,
   `savings` decimal(10,2) UNSIGNED DEFAULT NULL,
-  `cart_id` int(10) UNSIGNED DEFAULT NULL,
-  `product_id` int(10) UNSIGNED DEFAULT NULL
+  `cart_id` int(10) UNSIGNED NOT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `cart_item`
 --
 DELIMITER $$
-CREATE TRIGGER `delete_cart` AFTER DELETE ON `cart_item` FOR EACH ROW update cart
-set total_price = total_price - old.total_price,
-savings = savings - old.savings,
-quantity = quantity - old.quantity
-where id = old.cart_id
+CREATE TRIGGER `delete_cart` AFTER DELETE ON `cart_item` FOR EACH ROW BEGIN
+	select is_visible into @visible
+    from product where id = old.product_id;
+	if @visible = 1 THEN
+    	update cart
+		set total = total - old.total,
+			savings = savings - old.savings,
+			quantity = quantity - old.quantity
+		where id = old.cart_id;
+    end if;
+END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_cart` AFTER INSERT ON `cart_item` FOR EACH ROW update cart
-set total_price = total_price + new.total_price,
-savings = savings + new.savings,
-quantity = quantity + new.quantity
-where id = new.cart_id
+CREATE TRIGGER `insert_cart` AFTER INSERT ON `cart_item` FOR EACH ROW BEGIN
+	select is_visible into @visible from product
+    where id = new.product_id;
+    if @visible = 1 then
+		update cart
+		set total = total + new.total,
+			savings = savings + new.savings,
+			quantity = quantity + new.quantity
+		where id = new.cart_id;
+     end if;
+END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_cart` AFTER UPDATE ON `cart_item` FOR EACH ROW update cart
-set total_price = -old.total_price + new.total_price,
-savings = -old.savings + new.savings,
-quantity = -old.quantity + new.quantity
-where id = new.cart_id
+CREATE TRIGGER `update_cart` AFTER UPDATE ON `cart_item` FOR EACH ROW BEGIN
+	select is_visible into @visible from product
+    where id = new.product_id;
+    if @visible = 1 THEN
+    	update cart
+		set total = total + new.total - old.total,
+			savings = savings + new.savings - old.savings,
+			quantity = quantity + new.quantity - old.quantity
+		where id = new.cart_id;
+    end if;
+END
 $$
 DELIMITER ;
 
@@ -306,11 +324,11 @@ CREATE TABLE `gallery` (
 --
 
 INSERT INTO `gallery` (`id`, `thumbnail`, `sort`, `product_id`) VALUES
-(6, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 6, 1),
-(7, 'https://cdn.tgdd.vn/Products/Images/8781/297350/bhx/nac-dam-heo-nhap-khau-dong-lanh-tui-500g-202211111014371522.jpg', 7, 1),
-(8, 'https://cdn.tgdd.vn/Products/Images/8781/297350/bhx/nac-dam-heo-nhap-khau-dong-lanh-500g-202307141308024732.jpg', 8, 1),
-(9, 'https://cdn.tgdd.vn/Products/Images/8645/198877/bhx/hat-nem-cao-cap-vi-nam-huong-maggi-goi-450g-202207291105505226.jpg', 9, 1),
-(10, 'https://cdn.tgdd.vn/Products/Images/8645/198877/bhx/sellingpoint.jpg', 10, 1),
+(6, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 1, 1),
+(7, 'https://cdn.tgdd.vn/Products/Images/8781/297350/bhx/nac-dam-heo-nhap-khau-dong-lanh-tui-500g-202211111014371522.jpg', 2, 1),
+(8, 'https://cdn.tgdd.vn/Products/Images/8781/297350/bhx/nac-dam-heo-nhap-khau-dong-lanh-500g-202307141308024732.jpg', 3, 1),
+(9, 'https://cdn.tgdd.vn/Products/Images/8645/198877/bhx/hat-nem-cao-cap-vi-nam-huong-maggi-goi-450g-202207291105505226.jpg', 4, 1),
+(10, 'https://cdn.tgdd.vn/Products/Images/8645/198877/bhx/sellingpoint.jpg', 5, 1),
 (16, 'https://cdn.tgdd.vn/Products/Images/8781/319228/bhx/ba-roi-heo-nhap-khau-dong-lanh-500g-hat-nem-maggi-400g-202311201604013696.jpg', 16, 2),
 (17, 'https://cdn.tgdd.vn/Products/Images/8781/297349/bhx/ba-roi-heo-nhap-khau-dong-lanh-500gr-202306090838016447.jpg', 17, 2),
 (18, 'https://cdn.tgdd.vn/Products/Images/8781/297349/bhx/ba-roi-heo-nhap-khau-dong-lanh-500gr-202307141303033442.jpg', 18, 2),
@@ -8472,7 +8490,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `thumbnail`, `name`, `reg_price`, `discount_percent`, `discount_price`, `quantity`, `unit`, `canonical`, `rating`, `description`, `article`, `is_featured`, `is_visible`, `created_at`, `updated_at`, `deleted_at`, `category_id`, `brand_id`) VALUES
-(1, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 'Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g', 105500.00, 10, 94950.00, 69, 'gói', '', 5.0, 'Nạc dăm là phần nạc dăm mềm, có lớp mỡ mỏng, chứa nhiều axit amin cần thiết cho cơ thể, dùng làm nguyên liệu chế biến các món ăn hấp dẫn. Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g chất lượng, giàu dinh dưỡng, mang đến những món ăn ngon cho gia đình.', NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
+(1, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 'Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g', 105500.00, 10, 94950.00, 69, 'gói', NULL, 5.0, 'Nạc dăm là phần nạc dăm mềm, có lớp mỡ mỏng, chứa nhiều axit amin cần thiết cho cơ thể, dùng làm nguyên liệu chế biến các món ăn hấp dẫn. Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g chất lượng, giàu dinh dưỡng, mang đến những món ăn ngon cho gia đình.', NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-25 20:43:52', NULL, 1, 1),
 (2, 'https://cdn.tgdd.vn/Products/Images/8781/319228/bhx/ba-roi-heo-nhap-khau-dong-lanh-500g-hat-nem-maggi-400g-202311201604013696.jpg', 'Ba rọi heo nhập khẩu 500g & hạt nêm Maggi 400g', 111500.00, 13, 97005.00, 76, 'gói', '', 5.0, NULL, NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (3, 'https://cdn.tgdd.vn/Products/Images/8781/297349/bhx/-202306211448544376.jpg', 'Ba rọi heo nhập khẩu 500g', 65000.00, 0, 65000.00, 69, 'túi', '500g', 5.0, 'Ba rọi heo nhập khẩu có da với tỉ lệ nạc mỡ tuyệt vời, thịt heo săn chắc ngọt nên luôn được các bà nội trợ ưa chuộng và tin dùng. Ba rọi heo nhập khẩu đông lạnh với phương pháp cấp đông hiện đại, giúp lưu giữ hương vị tự nhiên, mang đến những món ăn ngon cho gia đình.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (4, 'https://cdn.tgdd.vn/Products/Images/8781/314535/bhx/ba-roi-heo-nhap-khau-dong-lanh-300g-202309072143306697.jpg', 'Ba rọi heo nhập khẩu đông lạnh 300g', 40000.00, 0, 40000.00, 16, 'túi', '300g', 5.0, 'Ba rọi là phần thịt heo có tỉ lệ nạc mỡ cân đối, săn chắc, mềm ngọt nên được nhiều chị em nội trợ ưa chuộng lựa chọn cho bữa ăn gia đình. Ba rọi heo nhập khẩu đông lạnh được cấp đông theo phương pháp hiện đại giúp thịt vẫn giữ được hương vị vốn có.', NULL, 1, 0, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
@@ -9624,8 +9642,64 @@ INSERT INTO `product` (`id`, `thumbnail`, `name`, `reg_price`, `discount_percent
 --
 DELIMITER $$
 CREATE TRIGGER `update_cart_items` AFTER UPDATE ON `product` FOR EACH ROW update cart_item
-set total_price = quantity * new.discount_price, savings = quantity*(new.reg_price - new.discount_price)
+set total = quantity * new.discount_price, savings = quantity*(new.reg_price - new.discount_price)
 where product_id = new.id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_visible_cart` AFTER UPDATE ON `product` FOR EACH ROW BEGIN
+	if new.is_visible <> old.is_visible THEN
+    	if new.is_visible = 1 THEN
+        	update cart
+            set quantity = quantity + (
+                select quantity 
+                from cart_item
+                where product_id = new.id
+                	and cart_id = cart.id
+            ), savings = savings + (
+            	select savings 
+                from cart_item
+                where product_id = new.id
+                	and cart_id = cart.id
+            ), total = total + (
+            	select total 
+                from cart_item
+                where product_id = new.id
+                	and cart_id = cart.id
+            )
+            where id in (
+            	select DISTINCT cart.id
+                from cart, cart_item
+                where cart.id = cart_item.cart_id
+                	and cart_item.product_id = new.id
+            );
+        else
+        	update cart
+            set quantity = quantity - (
+                select quantity 
+                from cart_item
+                where product_id = new.id
+                	and cart_id = cart.id
+            ), savings = savings - (
+            	select savings 
+                from cart_item
+                where product_id = new.id
+                	and cart_id = cart.id
+            ), total = total - (
+            	select total 
+                from cart_item
+                where product_id = new.id
+                	and cart_id = cart.id
+            )
+            where id in (
+            	select DISTINCT cart.id
+                from cart, cart_item
+                where cart.id = cart_item.cart_id
+                	and cart_item.product_id = new.id
+            );
+        end if;
+    end if;
+END
 $$
 DELIMITER ;
 
@@ -9952,13 +10026,13 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cart_item`
 --
 ALTER TABLE `cart_item`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `category`
