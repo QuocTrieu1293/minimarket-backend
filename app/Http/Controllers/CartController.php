@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Exception;
 use App\Models\Cart;
 use App\Models\CartItem;
-use Illuminate\Database\Eloquent\Collection;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 

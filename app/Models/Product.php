@@ -52,11 +52,15 @@ class Product extends Model
         return $this->hasMany(Review::class,'product_id','id');
     }
 
+    public function sale_items() : HasMany {
+        return $this->hasMany(SaleItem::class,'product_id','id');
+    }
+
     public function order_items() : HasMany {
         return $this->hasMany(OrderItem::class,'product_id','id');
     }
 
-    public function sale_items() : HasMany {
-        return $this->hasMany(SaleItem::class,'product_id','id');
+    public function cart_items() : HasMany {
+        return $this->hasMany(CartItem::class, 'product_id', 'id');
     }
 }

@@ -13,9 +13,10 @@ class CartItem extends Model
 
     protected static function booted() : void {
         static::addGlobalScope('visible', function(Builder $query) {
-            $query->whereHas('product', function($query) {
-                $query->where('is_visible',1);
-            });
+            // $query->whereHas('product', function($query) {
+            //     $query->where('is_visible',1);
+            // });
+            $query->has('product');
         });
     }
 

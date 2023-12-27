@@ -14,7 +14,7 @@ class OrderItem extends Model
     protected $table = 'order_item';
     public $timestamps = false;
     protected $fillable = [
-        'unit_price', 'quantity', 'order_id', 'product_id'
+        'quantity', 'order_id', 'product_id', 'unit_price', 'total_price'
     ];
 
     public function product() : BelongsTo {

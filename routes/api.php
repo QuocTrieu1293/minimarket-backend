@@ -5,8 +5,11 @@ use App\Http\Controllers\CategoryGroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client;
+use App\Http\Controllers\AccountController;
 use App\Models\Category;
 use App\Models\OrderItem;
+use App\Http\Controllers\OrderController;
+use Illuminate\Auth\Events\Registered;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +22,16 @@ use App\Models\OrderItem;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     // dd('hello');
+//     return $request->user();
+// });
+
+// Route::post('user/register', function(Request $request) {
+//     $user = User::create($request->all());
+//     event(new Registered($user));
+//     return $user;
+// });
 
 Route::prefix('sanpham')->name('product.')->group(function() {
     Route::get('/', [Client\ProductController::class,'index'])
@@ -91,6 +101,28 @@ Route::prefix('giohang')->name('cart.')->group(function() {
     Route::put('capnhat/{id}', [$controller, 'updateItem']) //cartItemId
         ->name('item-update');
     
+});
+
+Route::prefix('donhang')->name('order.')->group(function() {
+    $controller = OrderController::class;
+
+    Route::post('/them',[$controller, 'add'])
+        ->name('add'); 
+});
+
+Route::name('account.')->group(function() {
+    $controller = AccountController::class;
+
+    Route::post('dangnhap', [$controller, 'login'])
+        ->name('login');
+    Route::post('dangky', [$controller, 'register'])
+        ->name('register');
+    Route::prefix('taikhoan/{id}')->group(function() use($controller) {
+        Route::get('/thongtin', [$controller, 'getInfo'])
+            ->name('get-info');
+        Route::put('/capnhat', [$controller, 'updateInfo'])
+            ->name('update-info');
+    });
 });
 
 Route::post('test', function(Request $request) {

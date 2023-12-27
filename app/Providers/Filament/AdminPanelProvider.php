@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        $panel = $panel
             ->default()
             ->id('admin')
             ->path('/')
@@ -62,7 +62,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                // Middleware\RedirectIfNotFilamentAdmin::class
             ])
             ->defaultAvatarProvider(BoringAvatarsProvider::class)
             ->passwordReset()
@@ -89,5 +88,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-s-cog-8-tooth')
             ])
             ;
+        // dd($panel->getLoginRouteAction());
+        return $panel;
     }
 }

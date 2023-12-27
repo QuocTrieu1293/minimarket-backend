@@ -15,9 +15,10 @@ use App\Models\{Product, Category};
 |
 */
 
-Route::prefix('admin')->group(function() {
-    Route::get('setting',function() {
-        return view('admin.setting');
-    });
-});
+// Route::prefix('admin')->group(function() {
+//     Route::get('setting',function() {
+//         return view('admin.setting');
+//     });
+// });
+
 
