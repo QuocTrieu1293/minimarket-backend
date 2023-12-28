@@ -9,7 +9,11 @@ use App\Http\Controllers\AccountController;
 use App\Models\Category;
 use App\Models\OrderItem;
 use App\Http\Controllers\OrderController;
+use App\Models\SaleEvent;
 use Illuminate\Auth\Events\Registered;
+use App\Models\Order;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,17 +46,41 @@ Route::prefix('sanpham')->name('product.')->group(function() {
         ->name('best-sells');
     Route::get('search',[Client\ProductController::class,'search'])
         ->name('search');
+    Route::post('themdanhgia',[Client\ProductController::class, 'addReview'])
+        ->name('add-review');
     Route::prefix('{id}')->group(function() {
         Route::get('/',[Client\ProductController::class, 'getDetail'])
             ->name('detail');
         Route::get('lienquan',[Client\ProductController::class, 'getRelevants'])
             ->name('relevants');
-        Route::get('reviews',[Client\ProductController::class, 'getReviews'])
+        Route::get('danhgia',[Client\ProductController::class, 'getReviews'])
             ->name('reviews');
-        Route::post('themdanhgia',[Client\ProductController::class, 'addReview'])
-            ->name('add-review');
     });
     
+});
+
+Route::prefix('sale')->name('sale-event.')->group(function() {
+    Route::get('/', function() {
+        $event = SaleEvent::latest()->first();
+        if(!$event)
+            return [];
+        return [
+            'id' => $event->id,
+            'name' => $event->name,
+            'description' => $event->description,
+            'start_time' => $event->start_time,
+            'end_time' => $event->end_time
+        ];
+    })
+    ->name('info');
+    Route::get('/sanpham', function() {
+        $event = SaleEvent::latest()->first();
+        if(!$event)
+            return [];
+        $items = $event->sale_items;
+        
+    })
+    ->name('products');
 });
 
 Route::prefix('danhmuc')->name('category_group.')->group(function() {
@@ -108,6 +136,8 @@ Route::prefix('donhang')->name('order.')->group(function() {
 
     Route::post('/them',[$controller, 'add'])
         ->name('add'); 
+    Route::get('/{id}', [$controller, 'get'])
+        ->name('get');
 });
 
 Route::name('account.')->group(function() {
@@ -122,15 +152,19 @@ Route::name('account.')->group(function() {
             ->name('get-info');
         Route::put('/capnhat', [$controller, 'updateInfo'])
             ->name('update-info');
+        Route::get('/donhang', [$controller, 'getOrders'])
+            ->name('get-orders');
     });
 });
 
-Route::post('test', function(Request $request) {
-    $item = OrderItem::create([
-        'unit_price' => $request->unit_price,
-        'quantity' => $request->quantity,
-        'user_id' => $request->user_id,
-        'product_id' => $request->product_id
-    ]);
-    return $item->total_price;
+Route::get('test/{id}', function($id) {
+    $query = Order::findOrFail($id)->order_items()->first()
+                ->product()
+                ->withoutGlobalScope('visible')->withTrashed();
+    return $query->first()->thumbnail;
+    // DB::enableQueryLog();
+    // $query->first();
+    // $log = DB::getQueryLog();
+    // $log = end($log);
+    // dd($log);
 });

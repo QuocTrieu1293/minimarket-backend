@@ -7,6 +7,7 @@ use App\Models\Review;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ReviewResource;
 use App\Models\Category;
 use App\Models\OrderItem;
 use Exception;
@@ -56,19 +57,8 @@ class ProductController extends Controller
 
     public function getReviews($id) { //Có cần paginate ?
         try {
-            $reviews = Product::findOrFail($id)->reviews()->get();
-            $response = [];
-            foreach($reviews as $review) {
-                // dd($review->user);
-                $response[] = [
-                    'name' => $review->user->name,
-                    'created_at' => $review->created_at,
-                    'title' => $review->title,
-                    'comment' => $review->comment,
-                    'rating' => $review->rating
-                ];
-            }
-            return response()->json($response);
+            $reviews = Product::findOrFail($id)->reviews()->orderByDesc('created_at')->get();
+            return response()->json(ReviewResource::collection($reviews));
         }catch(Exception $e) {
             return response()->json(["error" => $e->getMessage()],404);
         }
@@ -80,7 +70,7 @@ class ProductController extends Controller
         }])->having('products_count','>',0)->orderBy('products_count','desc')->take(5)->get();
         // dd($categories);
         if($categories->count() < 5) {
-            $categories = $categories->concat(Category::whereHas('products','>=',12)
+            $categories = $categories->concat(Category::has('products','>=',12)
             ->inRandomOrder()
             ->take(5-($categories->count()))
             ->get());
@@ -150,17 +140,17 @@ class ProductController extends Controller
         return $product;
     }
 
-    public function addReview(Request $request, $id) {
+    public function addReview(Request $request) {
         $rules = [
-            'user_id' => 'required|exists:users,id',
-            'product_id' => 'required|exists:product,id',
+            'userId' => 'required|exists:users,id',
+            'productId' => 'required|exists:product,id',
             'title' => 'nullable|string|max:255',
             'comment' => 'nullable|string|max:5000',
             'rating' => 'bail|required|integer|between:1,5'
         ];
         $messages = [
-            'user_id.required' => 'user_id không được để trống',
-            'product_id.required' => 'product_id không được để trống',
+            'userId.required' => 'userId không được để trống',
+            'productId.required' => 'productId không được để trống',
             'title.max' => 'Tiêu đề tối đa 255 kí tự',
             'comment.max' => 'Nội dung tối đa 5000 kí tự',
             'rating.required' => 'Vui lòng đánh giá sản phẩm',
@@ -170,29 +160,31 @@ class ProductController extends Controller
         ];
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()) {
-            return response()->json($validator->messages(),422);
+            return response()->json([
+                "status" => "error",
+                "message" => "Failed to add review",
+                "error" => $validator->messages()
+          ],422);
         }
         $review = Review::create([
-            'user_id' => $request->user_id,
-            'product_id' => $request->product_id,
+            'user_id' => $request->userId,
+            'product_id' => $request->productId,
             'title' => $request->title,
             'comment' => $request->comment,
             'rating' => $request->rating
         ]);
         // dd($review);
         if(is_null($review))
-            return response()->json(['status' => 'error','messages' => 'Thêm đánh giá không thành công']);
+            return response()->json([
+                "status" => "error",
+                "message" => "Failed to add review",
+                "error" => "Thêm đánh giá thất bại"
+          ], 422);
         //tính điểm rating trung bình
         $product = $review->product;
         $product->update(['rating' => $product->reviews()->avg('rating')]);
-        $response = [
-            'name' => $review->user->name, 
-            'created_at' => $review->created_at,
-            'title' => $review->title, 
-            'comment' => $request->comment, 
-            'rating' => $request->rating
-        ];
-        return response()->json($response,201);
+        $reviews = $product->reviews()->orderByDesc('created_at')->get();
+        return response()->json(ReviewResource::collection($reviews),201);
     }
 
 }

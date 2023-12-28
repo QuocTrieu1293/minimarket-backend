@@ -18,8 +18,12 @@ class CategoryGroupController extends Controller
 
     public function getCategories($id) {
         try {
-            $categories = CategoryGroup::findOrFail($id)->categories;
-            return $categories;
+            $group = CategoryGroup::findOrFail($id);
+            $categories = $group->categories;
+            return [
+                'categoryGroupName' => $group->name,
+                'list' => $categories 
+            ];
         }catch(Exception $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         }

@@ -19,6 +19,10 @@ class Order extends Model
     protected $fillable = [
         'address', 'total', 'note', 'payment_method', 'user_id'
     ];
+    protected $casts = [
+        'created_at' => 'datetime',
+        'total' => 'float',
+    ];
 
     public function user() : BelongsTo {
         return $this->belongsTo(User::class,'user_id','id');

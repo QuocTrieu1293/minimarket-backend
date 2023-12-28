@@ -71,8 +71,7 @@ class ProductResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-            
+            ->schema([        
                 FormGrid::make([
                     'md' => 5,
                     'sm' => 2
@@ -709,6 +708,9 @@ class ProductResource extends Resource
             ->recordUrl(null)
             ->poll('15s')
             ->emptyStateDescription('')
+            ->headerActions([
+                \Filament\Tables\Actions\CreateAction::make()
+            ])
             ;
     }
     

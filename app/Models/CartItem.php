@@ -31,7 +31,7 @@ class CartItem extends Model
     protected $casts = [
         'quantity' => 'integer',
         'total' => 'float',
-        'savings' => 'float',
+        'savings' => 'float'
     ];
 
     public function cart() : BelongsTo {

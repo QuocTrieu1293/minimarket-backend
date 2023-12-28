@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
@@ -106,6 +107,21 @@ class AccountController extends Controller
             $statusCode = ($e instanceof ValidationException)? 422 : 404;
             return response()->json(['error' => $e->getMessage()], $statusCode);
         }
+    }
+
+    public function getOrders($id) {
+        // id, status, total, date: created_at // thời gian đặt hàng
+  		// thumbnail: thumbnail của sản phẩm bất kì hoặc sản phầm đầu tiên đều đc
+        //orderByDesc('created_at')
+
+        try {
+            $orders = User::role('customer')->findOrFail($id)->orders()
+                    ->orderByDesc('created_at')->get();
+            return response()->json(OrderResource::collection($orders));
+        }catch(Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+
     }
 
     
