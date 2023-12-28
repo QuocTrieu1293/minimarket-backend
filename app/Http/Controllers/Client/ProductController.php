@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\WishlistResource;
@@ -19,21 +20,29 @@ use Illuminate\Support\Facades\Validator;
 class ProductController extends Controller
 {
 
-    const attributes = [
-        'id','thumbnail','name','reg_price','discount_percent','discount_price','canonical','quantity',
-        'rating','category_id','brand_id'
-    ];
+    // const attributes = [
+    //     'id','thumbnail','name','reg_price','discount_percent','discount_price','canonical','quantity',
+    //     'rating','category_id','brand_id'
+    // ];
+
+    // public function index() {
+    //     $response = Product::select(...ProductController::attributes)->inRandomOrder()->paginate(20);
+    //     return $response;
+    // }
 
     public function index() {
-        $response = Product::select(...ProductController::attributes)->inRandomOrder()->paginate(20);
-        return $response;
+        $products = Product::inRandomOrder()->paginate(20);
+        return ProductResource::collection($products);
     }
 
     public function getRelevants($id) {
         try {
             $category_id = Product::findOrFail($id)->category_id;
-            return Product::select(...ProductController::attributes)
-                ->where('category_id',$category_id)->where('id','<>',$id)->inRandomOrder()->take(5)->get();
+            // return Product::where('category_id',$category_id)->where('id','<>',$id)
+            //         ->inRandomOrder()->take(5)->get();
+            $products = Product::where('category_id',$category_id)->where('id','<>',$id)
+                    ->inRandomOrder()->take(5)->get();
+            return response()->json(ProductResource::collection($products));
         }catch(Exception $e) {
             return response()->json(["error" => $e->getMessage()],404);
         }
@@ -44,20 +53,26 @@ class ProductController extends Controller
         //     Product::where('id',$id)->select(...ProductController::attributes)
         //     ->addSelect('quantity','description','article')->get()
         // );
-        $product = Product::where('id',$id)->select(...ProductController::attributes)
-        ->addSelect('quantity','description','article')
-        ->with(['galleries' => function($query) {
-            $query->select('thumbnail','sort','product_id')->orderBy('sort','asc');
-        }])
-        ->with([
-            'brand' => fn($query) => $query->select('id', 'name'),
-            'category' => fn($query) => $query->select('id', 'name')
-        ])
-        ->first();
-        return response()->json($product);
+        // $product = Product::where('id',$id)->select(...ProductController::attributes)
+        // ->addSelect('quantity','description','article')
+        // ->with(['galleries' => function($query) {
+        //     $query->select('thumbnail','sort','product_id')->orderBy('sort','asc');
+        // }])
+        // ->with([
+        //     'brand' => fn($query) => $query->select('id', 'name'),
+        //     'category' => fn($query) => $query->select('id', 'name')
+        // ])
+        // ->first();
+        // return response()->json($product);
+        try {
+            $product = Product::findOrFail($id);
+            return new ProductDetailResource($product);
+        }catch(Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
 
-    public function getReviews($id) { //Có cần paginate ?
+    public function getReviews($id) {
         try {
             $reviews = Product::findOrFail($id)->reviews()->orderByDesc('created_at')->get();
             return response()->json(ReviewResource::collection($reviews));
@@ -96,9 +111,13 @@ class ProductController extends Controller
                 $products = $products->concat($addProducts);
                 $productId = array_merge($productId,$addProducts->modelKeys());
             }
-            $record['products'] = $products->map(function($product){
-                return $product->only(ProductController::attributes);
-            });
+
+            // $record['products'] = $products->map(function($product){
+            //     return $product->only(ProductController::attributes);
+            // });
+            // ---------------------------------------------------------------
+            $record['products'] = ProductResource::collection($products);
+
             $response[] = $record;
         }
         return response()->json($response);
@@ -135,11 +154,12 @@ class ProductController extends Controller
 
     public function search(Request $request) {
         $keyword = $request->keyword;
-        $product = Product::select(ProductController::attributes)
-                    ->where('name','like',"%{$keyword}%")->get();
+        $products = Product::where('name','like',"%{$keyword}%")->get();
         // var_dump($product);
         // echo $product->count();
-        return $product;
+        
+        // return $products;
+        return response()->json(ProductResource::collection($products));
     }
 
     public function addReview(Request $request) {

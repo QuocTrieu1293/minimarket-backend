@@ -56,10 +56,18 @@ class CategoryGroupController extends Controller
                 $range = explode('-',$range);
                 $min = ((int) $range[0]) * 1000; $max = ((int) $range[1]) * 1000;
                 if($min) {
-                    $query = $query->where('discount_price','>=',$min);
+                    $query = $query->where(function($query) use($min) {
+                        $query->where(function($query) use($min) {
+                            $query->whereNotNull('event_price')->where('event_price','>=',$min);
+                        })->orWhere('discount_price','>=',$min);
+                    });
                 }
                 if($max) {
-                    $query = $query->where('discount_price','<=',$max);
+                    $query = $query->where(function($query) use($max) {
+                        $query->where(function($query) use($max) {
+                            $query->whereNotNull('event_price')->where('event_price','<=',$max);
+                        })->orWhere('discount_price','<=',$max);
+                    });
                 }
             }
             // DB::enableQueryLog();
@@ -76,8 +84,11 @@ class CategoryGroupController extends Controller
 
     public function getBrands($id) {
         try {
+            
+            //Has Many Through: lấy tất cả products của một có trong một category group
             $products = CategoryGroup::findOrFail($id)
-                        ->through('categories')->has('products')->get();
+            ->through('categories')->has('products')->get();
+
             $brands = $products->map(fn($product) => $product->brand)->unique();
             return $brands;
         }catch(Exception $e) {

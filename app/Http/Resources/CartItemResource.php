@@ -22,7 +22,7 @@ class CartItemResource extends JsonResource
             'name' => $this->product->name,
             'quantity' => $this->quantity,
             'reg_price' => $this->product->reg_price,
-            'discount_price' => $this->product->discount_price
+            'discount_price' => $this->product->getSalePrice()
         ];
     }
 }

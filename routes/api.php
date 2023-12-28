@@ -9,6 +9,7 @@ use App\Http\Controllers\AccountController;
 use App\Models\Category;
 use App\Models\OrderItem;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SaleEventController;
 use App\Models\SaleEvent;
 use Illuminate\Auth\Events\Registered;
 use App\Models\Order;
@@ -66,27 +67,12 @@ Route::prefix('sanpham')->name('product.')->group(function() {
 });
 
 Route::prefix('sale')->name('sale-event.')->group(function() {
-    Route::get('/', function() {
-        $event = SaleEvent::latest()->first();
-        if(!$event)
-            return [];
-        return [
-            'id' => $event->id,
-            'name' => $event->name,
-            'description' => $event->description,
-            'start_time' => $event->start_time,
-            'end_time' => $event->end_time
-        ];
-    })
-    ->name('info');
-    Route::get('/sanpham', function() {
-        $event = SaleEvent::latest()->first();
-        if(!$event)
-            return [];
-        $items = $event->sale_items;
-        
-    })
-    ->name('products');
+    $controller = SaleEventController::class;
+
+    Route::get('/', [$controller, 'getSaleEvent'])
+        ->name('info');
+    Route::get('/sanpham', [$controller, 'getSaleItems'])
+        ->name('items');
 });
 
 Route::prefix('danhmuc')->name('category_group.')->group(function() {

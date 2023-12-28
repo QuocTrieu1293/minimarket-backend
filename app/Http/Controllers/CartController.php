@@ -58,8 +58,8 @@ class CartController extends Controller
                 $quantity += $cartItem->quantity;
             }
             $cartItem->quantity = $quantity;
-            $cartItem->total = $quantity * $product->discount_price;
-            $cartItem->savings = $quantity * ($product->reg_price - $product->discount_price);
+            $cartItem->total = $quantity * $product->getSalePrice();
+            $cartItem->savings = $quantity * ($product->reg_price - $product->getSalePrice());
             $cartItem->save(); 
             return $this->response(Cart::find($request->cartId));
         }catch(Exception $e) {
@@ -86,8 +86,8 @@ class CartController extends Controller
                 $product = $cartItem->product;
                 $cartItem->update([
                     'quantity' => $request->quantity,
-                    'total' => $request->quantity * $product->discount_price,
-                    'savings' => $request->quantity * ($product->reg_price - $product->discount_price)
+                    'total' => $request->quantity * $product->getSalePrice(),
+                    'savings' => $request->quantity * ($product->reg_price - $product->getSalePrice())
                 ]);
             }else if($request->quantity == 0) {
                 $cartItem->delete();

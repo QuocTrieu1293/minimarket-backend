@@ -37,7 +37,7 @@ class OrderController extends Controller
             ]);
             foreach($items as $item) {
                 OrderItem::create([
-                    'unit_price' => $item->product->discount_price, 
+                    'unit_price' => $item->product->getSalePrice(), 
                     'quantity' => $item->quantity, 
                     'order_id' => $order->id, 
                     'product_id' => $item->product_id, 

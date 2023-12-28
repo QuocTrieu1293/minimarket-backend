@@ -19,7 +19,7 @@ class WishlistResource extends JsonResource
             'id' => $this->product->id,
             'thumbnail' => $this->product->thumbnail,
             'name' => $this->product->name,
-            'discount_price' => $this->product->discount_price
+            'discount_price' => $this->product->getSalePrice()
         ];
     }
 }

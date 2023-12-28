@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -22,7 +23,7 @@ class Product extends Model
     protected $table = 'product';
     public $timestamps = true;
     protected $attributes = [
-        'rating' => 5.0
+        'rating' => 5.0,
     ]; //quy định giá trị mặc định cho các trường trong bảng
     protected $fillable = [
         'name', 'reg_price', 'discount_price','discount_percent', 'quantity', 'unit', 'canonical', 'description', 'is_featured', 'is_visible', 'article', 'rating'
@@ -32,9 +33,20 @@ class Product extends Model
         'reg_price' => 'float',
         'discount_price' => 'float',
         'discount_percent' => 'integer',
+        'event_price' => 'float',
+        'event_percent' => 'integer',
         'quantity' => 'integer',
         'rating' => 'float'
     ];
+
+    //event_price hoặc discount_price 
+    public function getSalePrice() : float {
+        return $this->event_price ?? $this->discount_price;
+    }
+    //event_percent hoặc discount_percent
+    public function getSalePercent() : int {
+        return $this->event_percent ?? $this->discount_percent;
+    }
 
     public function category() : BelongsTo {
         return $this->belongsTo(Category::class,'category_id','id');
@@ -52,8 +64,8 @@ class Product extends Model
         return $this->hasMany(Review::class,'product_id','id');
     }
 
-    public function sale_items() : HasMany {
-        return $this->hasMany(SaleItem::class,'product_id','id');
+    public function sale_item() : HasOne {
+        return $this->hasOne(SaleItem::class,'product_id','id');
     }
 
     public function order_items() : HasMany {
