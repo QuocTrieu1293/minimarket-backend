@@ -8,8 +8,10 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ReviewResource;
+use App\Http\Resources\WishlistResource;
 use App\Models\Category;
 use App\Models\OrderItem;
+use App\Models\Wishlist;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -185,6 +187,29 @@ class ProductController extends Controller
         $product->update(['rating' => $product->reviews()->avg('rating')]);
         $reviews = $product->reviews()->orderByDesc('created_at')->get();
         return response()->json(ReviewResource::collection($reviews),201);
+    }
+
+    public function addWishlist(Request $request) {
+        try {
+            $product = Product::findOrFail($request->productId);
+            $user = User::role('customer')->findOrFail($request->userId);
+            Wishlist::updateOrCreate(
+                ['user_id' => $user->id, 'product_id' => $product->id]
+            );
+            return response()->json(WishlistResource::collection($user->wishlists));
+        }catch(Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+    }
+
+    public function deleteWishlist(Request $request) {
+        try {
+            $user = User::role('customer')->findOrFail($request->userId);
+            $user->wishlists()->where('product_id', $request->productId)->delete();
+            return response()->json(WishlistResource::collection($user->wishlists));
+        }catch(Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
 
 }

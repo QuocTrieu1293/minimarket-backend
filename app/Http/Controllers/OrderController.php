@@ -46,8 +46,7 @@ class OrderController extends Controller
             }
             $cart->cart_items()->delete();
             return [
-                'oderId' => $order->id,
-                'totalAmount'=> $order->total
+                'id' => $order->id,
             ];
         }catch(Exception $e) {
             $statusCode = ($e instanceof ValidationException) ? 422 : 404;

@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\WishlistResource;
 use App\Models\User;
+use App\Models\Wishlist;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
@@ -124,5 +127,13 @@ class AccountController extends Controller
 
     }
 
+    public function getWishList($id) {
+        try {
+            $items = User::role('customer')->findOrFail($id)->wishlists;
+            return response()->json(WishlistResource::collection($items));
+        }catch(Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+    }
     
 }

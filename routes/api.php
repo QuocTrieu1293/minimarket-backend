@@ -44,10 +44,16 @@ Route::prefix('sanpham')->name('product.')->group(function() {
         ->name('populars');
     Route::get('/banchay',[Client\ProductController::class, 'getBestSells'])
         ->name('best-sells');
-    Route::get('search',[Client\ProductController::class,'search'])
+    Route::get('/search',[Client\ProductController::class,'search'])
         ->name('search');
-    Route::post('themdanhgia',[Client\ProductController::class, 'addReview'])
+    Route::post('/themdanhgia',[Client\ProductController::class, 'addReview'])
         ->name('add-review');
+    Route::prefix('/yeuthich')->group(function() {
+        Route::post('/', [Client\ProductController::class, 'addWishlist'])
+            ->name('add-wishlist');
+        Route::delete('/', [Client\ProductController::class, 'deleteWishlist'])
+            ->name('delete-wishlist');
+    });
     Route::prefix('{id}')->group(function() {
         Route::get('/',[Client\ProductController::class, 'getDetail'])
             ->name('detail');
@@ -154,6 +160,8 @@ Route::name('account.')->group(function() {
             ->name('update-info');
         Route::get('/donhang', [$controller, 'getOrders'])
             ->name('get-orders');
+        Route::get('/yeuthich', [$controller, 'getWishList'])
+            ->name('wishlist');
     });
 });
 

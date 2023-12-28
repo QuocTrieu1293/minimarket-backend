@@ -82,4 +82,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->hasOne(Cart::class, 'user_id', 'id');
     }
 
+    public function wishlists() : HasMany {
+        return $this->hasMany(Wishlist::class, 'user_id', 'id');
+    }
+
 }
