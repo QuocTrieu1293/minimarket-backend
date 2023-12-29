@@ -77,7 +77,10 @@ class OrderController extends Controller
                 if($sale_item->remain === 0) {
                     $product->event_percent = null;
                     $product->event_price = null;
-                    $product->save();
+
+                    $product->timestamps = false;
+                    $product->save(); //ngăn không cập nhật trường updated_at
+                    $product->timestamps = true;
                 }
             }
             $cart->cart_items()->delete();

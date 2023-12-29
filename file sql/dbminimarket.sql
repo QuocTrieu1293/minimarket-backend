@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 29, 2023 at 05:57 PM
+-- Generation Time: Dec 29, 2023 at 10:51 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -8508,10 +8508,10 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `thumbnail`, `name`, `reg_price`, `discount_percent`, `discount_price`, `event_percent`, `event_price`, `quantity`, `unit`, `canonical`, `rating`, `description`, `article`, `is_featured`, `is_visible`, `created_at`, `updated_at`, `deleted_at`, `category_id`, `brand_id`) VALUES
-(1, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 'Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g', 105500.00, 10, 94950.00, NULL, NULL, 69, 'gói', NULL, 5.0, 'Nạc dăm là phần nạc dăm mềm, có lớp mỡ mỏng, chứa nhiều axit amin cần thiết cho cơ thể, dùng làm nguyên liệu chế biến các món ăn hấp dẫn. Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g chất lượng, giàu dinh dưỡng, mang đến những món ăn ngon cho gia đình.', NULL, 1, 0, '2023-11-28 02:46:58', '2023-12-26 17:52:32', NULL, 1, 1),
-(2, 'https://cdn.tgdd.vn/Products/Images/8781/319228/bhx/ba-roi-heo-nhap-khau-dong-lanh-500g-hat-nem-maggi-400g-202311201604013696.jpg', 'Ba rọi heo nhập khẩu 500g & hạt nêm Maggi 400g', 111500.00, 13, 97005.00, NULL, NULL, 76, 'gói', '', 4.3, NULL, NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-28 12:54:34', NULL, 1, 1),
-(3, 'https://cdn.tgdd.vn/Products/Images/8781/297349/bhx/-202306211448544376.jpg', 'Ba rọi heo nhập khẩu 500g', 65000.00, 0, 65000.00, NULL, NULL, 69, 'túi', '500g', 5.0, 'Ba rọi heo nhập khẩu có da với tỉ lệ nạc mỡ tuyệt vời, thịt heo săn chắc ngọt nên luôn được các bà nội trợ ưa chuộng và tin dùng. Ba rọi heo nhập khẩu đông lạnh với phương pháp cấp đông hiện đại, giúp lưu giữ hương vị tự nhiên, mang đến những món ăn ngon cho gia đình.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
-(4, 'https://cdn.tgdd.vn/Products/Images/8781/314535/bhx/ba-roi-heo-nhap-khau-dong-lanh-300g-202309072143306697.jpg', 'Ba rọi heo nhập khẩu đông lạnh 300g', 40000.00, 0, 40000.00, NULL, NULL, 16, 'túi', '300g', 5.0, 'Ba rọi là phần thịt heo có tỉ lệ nạc mỡ cân đối, săn chắc, mềm ngọt nên được nhiều chị em nội trợ ưa chuộng lựa chọn cho bữa ăn gia đình. Ba rọi heo nhập khẩu đông lạnh được cấp đông theo phương pháp hiện đại giúp thịt vẫn giữ được hương vị vốn có.', NULL, 1, 0, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
+(1, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 'Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g', 105500.00, 10, 94950.00, 20, 84400.00, 69, 'gói', NULL, 5.0, 'Nạc dăm là phần nạc dăm mềm, có lớp mỡ mỏng, chứa nhiều axit amin cần thiết cho cơ thể, dùng làm nguyên liệu chế biến các món ăn hấp dẫn. Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g chất lượng, giàu dinh dưỡng, mang đến những món ăn ngon cho gia đình.', NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-29 21:41:03', NULL, 1, 1),
+(2, 'https://cdn.tgdd.vn/Products/Images/8781/319228/bhx/ba-roi-heo-nhap-khau-dong-lanh-500g-hat-nem-maggi-400g-202311201604013696.jpg', 'Ba rọi heo nhập khẩu 500g & hạt nêm Maggi 400g', 111500.00, 13, 97005.00, 15, 94775.00, 76, 'gói', '', 4.3, NULL, NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-29 21:42:03', NULL, 1, 1),
+(3, 'https://cdn.tgdd.vn/Products/Images/8781/297349/bhx/-202306211448544376.jpg', 'Ba rọi heo nhập khẩu 500g', 65000.00, 0, 65000.00, 50, 32500.00, 69, 'túi', '500g', 5.0, 'Ba rọi heo nhập khẩu có da với tỉ lệ nạc mỡ tuyệt vời, thịt heo săn chắc ngọt nên luôn được các bà nội trợ ưa chuộng và tin dùng. Ba rọi heo nhập khẩu đông lạnh với phương pháp cấp đông hiện đại, giúp lưu giữ hương vị tự nhiên, mang đến những món ăn ngon cho gia đình.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-29 21:42:47', NULL, 1, 1),
+(4, 'https://cdn.tgdd.vn/Products/Images/8781/314535/bhx/ba-roi-heo-nhap-khau-dong-lanh-300g-202309072143306697.jpg', 'Ba rọi heo nhập khẩu đông lạnh 300g', 40000.00, 0, 40000.00, NULL, NULL, 16, 'túi', '300g', 5.0, 'Ba rọi là phần thịt heo có tỉ lệ nạc mỡ cân đối, săn chắc, mềm ngọt nên được nhiều chị em nội trợ ưa chuộng lựa chọn cho bữa ăn gia đình. Ba rọi heo nhập khẩu đông lạnh được cấp đông theo phương pháp hiện đại giúp thịt vẫn giữ được hương vị vốn có.', NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-29 21:32:47', NULL, 1, 1),
 (5, 'https://cdn.tgdd.vn/Products/Images/8781/298878/bhx/nac-dam-heo-nhap-khau-dong-lanh-tui-200g-202212060825395663.jpg', 'Nạc dăm heo nhập khẩu 200g', 29000.00, 0, 29000.00, NULL, NULL, 71, 'túi', '200g', 5.0, 'Nạc dăm là phần nạc dăm mềm, có lớp mỡ mỏng, chứa nhiều axit amin cần thiết cho cơ thể, dùng làm nguyên liệu chế biến các món ăn hấp dẫn. Nạc dăm heo nhập khẩu đông lạnh với phương pháp cấp đông hiện đại, giúp lưu giữ hương vị tự nhiên, mang đến những món ăn ngon cho gia đình.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (6, 'https://cdn.tgdd.vn/Products/Images/8781/297350/bhx/nac-dam-heo-nhap-khau-dong-lanh-tui-500g-202211111014371522.jpg', 'Nạc dăm heo nhập khẩu 500g', 52000.00, 0, 52000.00, NULL, NULL, 5, 'túi', '500g', 5.0, 'Nạc dăm là phần nạc dăm mềm, có lớp mỡ mỏng, chứa nhiều axit amin cần thiết cho cơ thể, dùng làm nguyên liệu chế biến các món ăn hấp dẫn. Nạc dăm heo nhập khẩu đông lạnh với phương pháp cấp đông hiện đại, giúp lưu giữ hương vị tự nhiên, mang đến những món ăn ngon cho gia đình.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (7, 'https://cdn.tgdd.vn/Products/Images/8781/307864/bhx/thit-vai-heo-nhap-khau-dong-lanh-200g-202306090845057118.jpg', 'Thịt vai heo nhập khẩu 200g', 25000.00, 0, 25000.00, NULL, NULL, 14, 'túi', '200g', 5.0, 'Thịt heo với tỉ lệ nạc mỡ hoàn hảo đảm bảo được độ ngon thịt, các món ăn như thịt luộc, thịt kho hoặc thịt xào với các loại rau, củ. Thịt vai heo nhập khẩu tại Bách hoá XANH có nguồn gốc rõ ràng, đảm bảo an toàn vệ sinh thực phẩm.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
@@ -8526,7 +8526,7 @@ INSERT INTO `product` (`id`, `thumbnail`, `name`, `reg_price`, `discount_percent
 (17, 'https://cdn.tgdd.vn/Products/Images/8781/297346/bhx/chan-gio-heo-nhap-khau-dong-lanh-500g-3-5-mieng-202306090841143145.jpg', 'Chân giò heo nhập khẩu 500g', 35000.00, 29, 24850.00, NULL, NULL, 70, 'túi', '500g', 5.0, 'Chân giò heo nhập khẩu là phần thịt heo giòn giòn, dai dai, cực kỳ bổ dưỡng mà các bà nội trợ ưa chuộng. Chân giò heo nhập khẩu đông lạnh với phương pháp cấp đông hiện đại, giúp lưu giữ hương vị tự nhiên, mang đến những món ăn ngon cho gia đình.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (18, 'https://cdn.tgdd.vn/Products/Images/8781/310966/bhx/thit-ba-roi-heo-rung-lai-250g-202308051537117960.jpg', 'Thịt ba rọi heo rừng lai 250g', 95000.00, 10, 85500.00, NULL, NULL, 74, 'khay', '250g', 5.0, 'Thịt ba rọi heo rừng lai tươi ngon, thịt dai, ngon, ngọt, chất lượng. Thịt ba rọi thích hợp chế biến các món như ba rọi chiên sả ớt, ba rọi heo rừng lai nướng,... vô cùng hấp dẫn và chứa nhiều dưỡng chất.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (19, 'https://cdn.tgdd.vn/Products/Images/12718/308126/bhx/thit-kho-trung-cut-300g-202308281045510922.jpg', 'Thịt kho trứng cút 300g', 49000.00, 0, 49000.00, NULL, NULL, 59, 'khay', '300g', 5.0, 'Thịt kho trứng cút 300g là thực phẩm sơ chế sẵn vô cùng tiện dụng, đến từ thương hiệu uy tín có tiếng. Thịt heo chất lượng tẩm ướp gia vị đậm đà, trứng cút mềm bùi, béo hòa quyền hoàn hảo bạn có ngay bữa cơm ngon chuẩn vị gia đình.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
-(20, 'https://cdn.tgdd.vn/Products/Images/12718/308119/bhx/dau-hu-don-thit-400g-202306220823306033.jpg', 'Đậu hũ dồn thịt 400g', 47000.00, 0, 47000.00, NULL, NULL, 73, 'khay', '400g', 5.0, 'Đậu hũ dồn thịt 400g tiện lợi, thơm ngon, tiết kiệm thời gian cho những chị em nội trợ bận rộn. Sản phẩm được đóng gói cẩn thận, vệ sinh, có thể chế biến ngay mà vẫn giữ trọn hương vị thơm ngon, đậm đà', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
+(20, 'https://cdn.tgdd.vn/Products/Images/12718/308119/bhx/dau-hu-don-thit-400g-202306220823306033.jpg', 'Đậu hũ dồn thịt 400g', 47000.00, 0, 47000.00, 30, 32900.00, 73, 'khay', '400g', 5.0, 'Đậu hũ dồn thịt 400g tiện lợi, thơm ngon, tiết kiệm thời gian cho những chị em nội trợ bận rộn. Sản phẩm được đóng gói cẩn thận, vệ sinh, có thể chế biến ngay mà vẫn giữ trọn hương vị thơm ngon, đậm đà', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-29 21:45:52', NULL, 1, 1),
 (21, 'https://cdn.tgdd.vn/Products/Images/12718/304914/bhx/sellingpoint.jpg', 'Mắm chưng hộp 100g', 26500.00, 0, 26500.00, NULL, NULL, 85, 'chén', '', 5.0, 'Đây là loại thực phẩm làm sẵn, ăn liền vô cùng tiện lợi được rất nhiều người yêu thích. Mắm chưng hộp 100g chính hãng thực phẩm làm sẵn Ngọc Tú được chế biến từ những nguyên liệu tươi ngon, an toàn, hương vị hài hòa ngon như mắm chưng tại nhà, được làm chín sẵn tiện lợi sử dụng', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (22, 'https://cdn.tgdd.vn/Products/Images/12718/308120/bhx/kho-qua-don-thit-400g-202306031510296686.jpg', 'Khổ qua dồn thịt 400g', 46000.00, 0, 46000.00, NULL, NULL, 5, 'khay', '400g', 5.0, 'Khổ qua dồn thịt 400g được sơ chế sẵn, nêm nếm vệ sinh sạch sẽ, bạn có thể nấu trực tiếp, tiết kiệm thời gian chế biến. Khổ qua dồn thịt khi nấu lên vẫn giữ được hương vị đậm đà, hấp dẫn và thơm ngon.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (23, 'https://cdn.tgdd.vn/Products/Images/12718/308122/bhx/sellingpoint.jpg', 'Nầm heo (Vú heo) nướng chao 300g', 75000.00, 0, 75000.00, NULL, NULL, 70, 'khay', '', 5.0, 'Nầm heo nướng chao 300g là thực phẩm sơ chế sẵn vô cùng tiện dụng, đến từ thương hiệu uy tín có tiếng. Nầm heo ngon cùng sốt chao mặn mà tròn vị, bạn có ngay món ăn ngon dinh dưỡng tại nhà.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
@@ -8535,8 +8535,8 @@ INSERT INTO `product` (`id`, `thumbnail`, `name`, `reg_price`, `discount_percent
 (26, 'https://cdn.tgdd.vn/Products/Images/12718/311002/bhx/combo-nuong-hoang-gia-khay-1kg-202307281019547012.jpg', 'Combo nướng hoàng gia 1kg', 305000.00, 9, 277550.00, NULL, NULL, 48, 'khay', '1kg', 5.0, 'Combo nướng hoàng gia khay 1kg tươi ngon, chất lượng, sử dụng tiện lợi, thích hợp cho các bữa tiệc nướng, dã ngoại ngoài trời. Sản phẩm bao gồm: Ba rọi bò, ba rọi heo, sườn non heo, gà nòi, tim heo, bắp mỹ,... đảm bảo nguồn gốc xuất xứ, an toàn cho sức khỏe người tiêu dùng.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (27, 'https://cdn.tgdd.vn/Products/Images/12718/311006/bhx/gia-cay-heo-khay-1kg-202307281020490591.jpg', 'Giả cầy heo 1kg', 114000.00, 10, 102600.00, NULL, NULL, 90, 'khay', '1kg', 5.0, 'Giả cầy heo khay 1kg chất lượng, đảm bảo nguồn gốc xuất xứ. Sản phẩm bao gồm các nguyên liệu như: Dựng heo, sườn non heo, ba rọi heo, củ riềng, sả, lá mơ,... giàu dinh dưỡng và đảm bảo an toàn, có thể chế biến thành nhiều món ăn thơm ngon.', NULL, 0, 1, '2023-11-28 02:46:58', '2023-12-23 08:23:54', NULL, 1, 1),
 (28, 'https://cdn.tgdd.vn/Products/Images/8781/312508/bhx/ba-roi-heo-cp-500g-xuong-que-heo-nhap-khau-dong-lanh-500g-202308031322364524.jpg', 'Thịt ba rọi C.P 500g', 98000.00, 0, 98000.00, NULL, NULL, 9, 'khay', '500g', 5.0, 'Thịt heo là nguyên liệu quen thuộc trong mỗi bữa ăn của mọi gia đình. Combo Thịt Ba Rọi Heo CP 500G & xương que heo đông lạnh 500g có thể chế biến đa dạng với nhiều hình thức như chiên, xào, nấu súp,... cung cấp năng lượng và chất dinh dưỡng cho cơ thể. ', NULL, 0, 1, '2023-11-28 02:52:21', '2023-12-23 08:23:54', NULL, 1, 2),
-(29, 'https://cdn.tgdd.vn/Products/Images/8781/228329/bhx/ba-roi-heo-cp-khay-500g-202202111520572889.jpg', 'Ba rọi rút sườn C.P 500g', 129000.00, 0, 129000.00, NULL, NULL, 71, 'khay', '500g', 5.0, 'Ba rọi heo của thương hiệu CP đạt các tiêu chuẩn về an toàn toàn thực phẩm, đảm bảo chất lượng, độ tươi ngon. Thịt heo mềm, vân nạc, mỡ rõ ràng nên rất phù hợp làm nguyên liệu để nấu thịt kho hột vịt. Thịt heo ba rọi có thể dùng điện thoại quét mã QR trên tem sản phẩm để kiểm tra nguồn gốc.', NULL, 0, 1, '2023-11-28 02:52:21', '2023-12-23 08:23:54', NULL, 1, 2),
-(30, 'https://cdn.tgdd.vn/Products/Images/8781/228329/bhx/ba-roi-heo-cp-khay-500g-202202111520572889.jpg', 'Ba rọi rút sườn C.P 300g', 79000.00, 0, 79000.00, NULL, NULL, 27, 'khay', '300g', 5.0, 'Ba rọi heo của thương hiệu CP đạt các tiêu chuẩn về an toàn toàn thực phẩm, đảm bảo chất lượng, độ tươi ngon. Thịt heo mềm, vân nạc, mỡ rõ ràng nên rất phù hợp làm nguyên liệu để nấu thịt kho hột vịt. Thịt heo ba rọi có thể dùng điện thoại quét mã QR trên tem sản phẩm để kiểm tra nguồn gốc.', NULL, 0, 1, '2023-11-28 02:52:21', '2023-12-23 08:23:54', NULL, 1, 2),
+(29, 'https://cdn.tgdd.vn/Products/Images/8781/228329/bhx/ba-roi-heo-cp-khay-500g-202202111520572889.jpg', 'Ba rọi rút sườn C.P 500g', 129000.00, 0, 129000.00, 20, 103200.00, 71, 'khay', '500g', 5.0, 'Ba rọi heo của thương hiệu CP đạt các tiêu chuẩn về an toàn toàn thực phẩm, đảm bảo chất lượng, độ tươi ngon. Thịt heo mềm, vân nạc, mỡ rõ ràng nên rất phù hợp làm nguyên liệu để nấu thịt kho hột vịt. Thịt heo ba rọi có thể dùng điện thoại quét mã QR trên tem sản phẩm để kiểm tra nguồn gốc.', NULL, 0, 1, '2023-11-28 02:52:21', '2023-12-29 21:47:31', NULL, 1, 2),
+(30, 'https://cdn.tgdd.vn/Products/Images/8781/228329/bhx/ba-roi-heo-cp-khay-500g-202202111520572889.jpg', 'Ba rọi rút sườn C.P 300g', 79000.00, 0, 79000.00, 40, 47400.00, 27, 'khay', '300g', 5.0, 'Ba rọi heo của thương hiệu CP đạt các tiêu chuẩn về an toàn toàn thực phẩm, đảm bảo chất lượng, độ tươi ngon. Thịt heo mềm, vân nạc, mỡ rõ ràng nên rất phù hợp làm nguyên liệu để nấu thịt kho hột vịt. Thịt heo ba rọi có thể dùng điện thoại quét mã QR trên tem sản phẩm để kiểm tra nguồn gốc.', NULL, 0, 1, '2023-11-28 02:52:21', '2023-12-29 21:48:55', NULL, 1, 2),
 (31, 'https://cdn.tgdd.vn/Products/Images/8781/226860/bhx/thit-dui-heo-cp-khay-300g-202203251617285316.jpg', 'Thịt đùi C.P 300g', 45500.00, 0, 45500.00, NULL, NULL, 22, 'khay', '300g', 5.0, 'Thịt đùi heo CP đạt các tiêu chuẩn về an toàn toàn thực phẩm, đảm bảo chất lượng, độ tươi ngon. Thịt đùi heo chủ yêu là phần nạc nên rất phù hợp cho người có chế độ ăn kiêng, giảm cân giữ dáng. Thịt heo có thể dùng điện thoại quét mã QR trên tem sản phẩm để kiểm tra nguồn gốc.', NULL, 0, 1, '2023-11-28 02:52:21', '2023-12-23 08:23:54', NULL, 1, 2),
 (32, 'https://cdn.tgdd.vn/Products/Images/8790/312259/bhx/dui-toi-ga-cp-500g-xuong-que-heo-nhap-khau-dong-lanh-500g-202308011009319424.jpg', 'Thịt đùi C.P 500g', 77000.00, 10, 69300.00, NULL, NULL, 27, 'khay', '500g', 5.0, 'Combo Đùi Tỏi Gà CP 500G & xương que heo đông lạnh 500g là nguyên liệu cần thiết cho mọi bữa ăn. Thịt gà, thịt heo cung cấp nhiều chất dinh dưỡng cho cơ thể. Có thể chế biến thịt theo nhiều cách như chiên, kho, nấu súp,.. giúp bữa ăn thêm đa dạng.', NULL, 0, 1, '2023-11-28 02:52:21', '2023-12-23 08:23:54', NULL, 1, 2),
 (33, 'https://cdn.tgdd.vn/Products/Images/8781/312553/bhx/3-thit-than-heo-cp-300g-nac-dam-heo-nhap-khau-dong-lanh-200g-202308031501343266.jpg', 'Nạc dăm C.P 300g', 54000.00, 0, 54000.00, NULL, NULL, 69, 'khay', '300g', 5.0, 'Thịt heo là nguyên liệu quen thuộc và gần như không thể thiếu trong mỗi bữa ăn của mọi gia đình. Combo 3 hộp Thịt thăn heo CP 300g có thể chế biến đa dạng với nhiều hình thức như chiên, xào, nấu súp,... cung cấp năng lượng và chất dinh dưỡng cho cơ thể.  ', NULL, 0, 1, '2023-11-28 02:52:21', '2023-12-23 08:23:54', NULL, 1, 2),
@@ -9801,24 +9801,6 @@ CREATE TABLE `review` (
   `user_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `review`
---
-
-INSERT INTO `review` (`id`, `rating`, `title`, `comment`, `created_at`, `updated_at`, `product_id`, `user_id`) VALUES
-(35, 5, 'title nè', 'nội dung nè', '2023-12-23 11:06:15', '2023-12-23 11:06:15', 1000, 1),
-(36, 5, 'title nè', 'nội dung nè', '2023-12-23 15:26:40', '2023-12-23 15:26:40', 1000, 1),
-(37, 5, 'title nè', 'nội dung nè', '2023-12-23 15:33:49', '2023-12-23 15:33:49', 1000, 1),
-(38, 5, 'title nè', 'nội dung nè', '2023-12-23 16:14:12', '2023-12-23 16:14:12', 1000, 1),
-(39, 4, 'title nè', 'nội dung nè', '2023-12-23 16:14:18', '2023-12-23 16:14:18', 1000, 1),
-(40, 4, 'title nè', 'nội dung nè', '2023-12-23 16:14:31', '2023-12-23 16:14:31', 1000, 1),
-(41, 4, 'title nè', 'nội dung nè', '2023-12-23 16:19:21', '2023-12-23 16:19:21', 1000, 1),
-(42, 4, 'title nè', 'nội dung nè', '2023-12-23 16:19:25', '2023-12-23 16:19:25', 1000, 1),
-(43, 4, 'title nè', 'nội dung nè', '2023-12-23 16:19:27', '2023-12-23 16:19:27', 1000, 1),
-(44, 5, 'mệt vl', 'má chán quá', '2023-12-28 10:26:19', '2023-12-28 10:26:19', 2, 1),
-(45, 5, 'mệt vl', 'má chán quá', '2023-12-28 10:27:33', '2023-12-28 10:27:33', 2, 1),
-(46, 3, 'mệt vl', 'má chán quá', '2023-12-28 10:28:41', '2023-12-28 10:28:41', 2, 11);
-
 -- --------------------------------------------------------
 
 --
@@ -9863,7 +9845,11 @@ CREATE TABLE `sale_item` (
 
 INSERT INTO `sale_item` (`id`, `product_id`, `event_id`, `quantity`, `remain`) VALUES
 (1, 29, 1, 10, 10),
-(3, 12, 1, 20, 20);
+(3, 30, 1, 20, 20),
+(4, 20, 1, 5, 5),
+(5, 3, 1, 4, 4),
+(6, 1, 1, 3, 3),
+(7, 2, 1, 3, 3);
 
 --
 -- Triggers `sale_item`
@@ -10225,7 +10211,7 @@ ALTER TABLE `sale_event`
 -- AUTO_INCREMENT for table `sale_item`
 --
 ALTER TABLE `sale_item`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `units`
