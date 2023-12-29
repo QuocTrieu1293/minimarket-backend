@@ -44,7 +44,9 @@ class OrderController extends Controller
                         'quantity' => $item->quantity, 
                         'order_id' => $order->id, 
                         'product_id' => $item->product_id, 
-                        'total_price' => $item->total
+                        'total_price' => $item->total,
+                        'from_event' => 
+                            ($sale_item && $sale_item->remain >= $item->quantity) ? true : false
                     ]);
                     
                 }else {
@@ -54,8 +56,9 @@ class OrderController extends Controller
                         'quantity' => $sale_item->remain, 
                         'order_id' => $order->id, 
                         'product_id' => $item->product_id, 
-                        'total_price' => $product->getSalePrice() * $sale_item->remain
+                        'total_price' => $product->getSalePrice() * $sale_item->remain,
                                                 //event_price
+                        'from_event' => true
                     ]); 
                     //Phần không được khuyễn mãi
                     OrderItem::create([
@@ -63,7 +66,8 @@ class OrderController extends Controller
                         'quantity' => $item->quantity - $sale_item->remain, 
                         'order_id' => $order->id, 
                         'product_id' => $item->product_id, 
-                        'total_price' => $product->discount_price * ($item->quantity - $sale_item->remain)
+                        'total_price' => $product->discount_price * ($item->quantity - $sale_item->remain),
+                        'from_event' => false
                     ]);
                 }
 

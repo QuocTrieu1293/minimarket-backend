@@ -13,13 +13,15 @@ class OrderItem extends Model
     
     protected $table = 'order_item';
     public $timestamps = false;
+    protected $attributes = ['from_event' => false];
     protected $fillable = [
-        'quantity', 'order_id', 'product_id', 'unit_price', 'total_price'
+        'quantity', 'order_id', 'product_id', 'unit_price', 'total_price', 'from_event'
     ];
     protected $casts = [
         'unit_price' => 'float',
         'quantity' => 'integer',
-        'total_price' => 'float'
+        'total_price' => 'float',
+        'from_event' => 'boolean'
     ];
 
     public function product() : BelongsTo {
