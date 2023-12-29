@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 29, 2023 at 12:13 AM
+-- Generation Time: Dec 29, 2023 at 05:57 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -8430,20 +8430,10 @@ CREATE TABLE `order_item` (
   `unit_price` decimal(10,2) UNSIGNED DEFAULT NULL,
   `quantity` int(10) UNSIGNED DEFAULT NULL,
   `total_price` decimal(10,2) UNSIGNED DEFAULT NULL,
+  `from_event` tinyint(1) NOT NULL DEFAULT 0,
   `order_id` int(10) UNSIGNED DEFAULT NULL,
   `product_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `order_item`
---
-
-INSERT INTO `order_item` (`id`, `unit_price`, `quantity`, `total_price`, `order_id`, `product_id`) VALUES
-(8, 97005.00, 2, 194010.00, 2, 2),
-(9, 65000.00, 1, 65000.00, 2, 3),
-(10, 29000.00, 6, 174000.00, 2, 5),
-(11, 25000.00, 1, 25000.00, 2, 9),
-(12, 75000.00, 3, 225000.00, 2, 12);
 
 -- --------------------------------------------------------
 
@@ -9975,14 +9965,6 @@ CREATE TABLE `wishlist` (
   `product_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `wishlist`
---
-
-INSERT INTO `wishlist` (`id`, `user_id`, `product_id`) VALUES
-(3, 11, 29),
-(5, 11, 12);
-
 -- --------------------------------------------------------
 
 --
@@ -10001,13 +9983,6 @@ CREATE TABLE `_order` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `user_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `_order`
---
-
-INSERT INTO `_order` (`id`, `address`, `total`, `note`, `status`, `payment_method`, `created_at`, `updated_at`, `deleted_at`, `user_id`) VALUES
-(2, '178/29 Trần Hưng Đạo', 683010, NULL, 'pending', 'COD', '2023-12-27 18:29:59', '2023-12-27 18:29:59', NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -10274,7 +10249,7 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `_order`
 --
 ALTER TABLE `_order`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
