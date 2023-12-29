@@ -23,7 +23,7 @@ class OrderController extends Controller
             ]);
             $cart = User::findOrFail($request->userId)->cart;
             $items = $cart->cart_items;
-            if(!$items) {
+            if($items->count() === 0) {
                 throw new Exception("Không thể tạo đơn hàng do giỏ hàng hiện đang rỗng");
             }
             // dd($cartItems);
@@ -36,13 +36,44 @@ class OrderController extends Controller
                 'user_id' => $request->userId
             ]);
             foreach($items as $item) {
-                OrderItem::create([
-                    'unit_price' => $item->product->getSalePrice(), 
-                    'quantity' => $item->quantity, 
-                    'order_id' => $order->id, 
-                    'product_id' => $item->product_id, 
-                    'total_price' => $item->total
-                ]);
+                $product = $item->product;
+                $sale_item = $product->sale_item;
+                if(($sale_item && $sale_item->remain >= $item->quantity) || (!$sale_item)) {
+                    OrderItem::create([
+                        'unit_price' => $product->event_price, 
+                        'quantity' => $item->quantity, 
+                        'order_id' => $order->id, 
+                        'product_id' => $item->product_id, 
+                        'total_price' => $item->total
+                    ]);
+                    
+                }else {
+                    //Phần khuyễn mãi
+                    OrderItem::create([
+                        'unit_price' => $product->event_price, 
+                        'quantity' => $sale_item->remain, 
+                        'order_id' => $order->id, 
+                        'product_id' => $item->product_id, 
+                        'total_price' => $product->event_price * $sale_item->remain
+                    ]);
+                    //Phần không được khuyễn mãi
+                    OrderItem::create([
+                        'unit_price' => $product->discount_price, 
+                        'quantity' => $item->quantity - $sale_item->remain, 
+                        'order_id' => $order->id, 
+                        'product_id' => $item->product_id, 
+                        'total_price' => $product->discount_price * ($item->quantity - $sale_item->remain)
+                    ]);
+                }
+
+                $sale_item->remain -= $item->quantity;
+                $sale_item->remain = max($sale_item->remain, 0);
+                $sale_item->save();
+                if($sale_item->remain === 0) {
+                    $product->event_percent = null;
+                    $product->event_price = null;
+                    $product->save();
+                }
             }
             $cart->cart_items()->delete();
             return [

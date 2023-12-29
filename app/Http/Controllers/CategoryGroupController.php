@@ -42,10 +42,10 @@ class CategoryGroupController extends Controller
                                 OrderItem::selectRaw('sum(quantity)')
                                 ->where('product_id','product.id')
                             ),
-                'tenaz' => $query->orderBy('product.name'),
-                'tenza' => $query->orderByDesc('product.name'),
-                'giathap' => $query->orderBy('product.discount_price'),
-                'giacao' => $query->orderByDesc('product.discount_price'),
+                'tenaz' => $query->orderBy('name', 'asc'),
+                'tenza' => $query->orderByDesc('name'),
+                'giathap' => $query->orderByRaw('IFNULL(event_price, discount_price) asc'),
+                'giacao' => $query->orderByRaw('IFNULL(event_price, discount_price) desc'),
                 default => $query
             };
             // dd($query->toSql());
@@ -59,14 +59,18 @@ class CategoryGroupController extends Controller
                     $query = $query->where(function($query) use($min) {
                         $query->where(function($query) use($min) {
                             $query->whereNotNull('event_price')->where('event_price','>=',$min);
-                        })->orWhere('discount_price','>=',$min);
+                        })->orWhere(function($query) use($min) {
+                            $query->whereNull('event_price')->where('discount_price','>=',$min);
+                        });
                     });
                 }
                 if($max) {
                     $query = $query->where(function($query) use($max) {
                         $query->where(function($query) use($max) {
                             $query->whereNotNull('event_price')->where('event_price','<=',$max);
-                        })->orWhere('discount_price','<=',$max);
+                        })->orWhere(function($query) use($max) {
+                            $query->whereNull('event_price')->where('discount_price','<=',$max);
+                        });
                     });
                 }
             }

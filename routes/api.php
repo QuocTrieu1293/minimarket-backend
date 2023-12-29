@@ -13,8 +13,10 @@ use App\Http\Controllers\SaleEventController;
 use App\Models\SaleEvent;
 use Illuminate\Auth\Events\Registered;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\ProductResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,6 +151,60 @@ Route::name('account.')->group(function() {
         Route::get('/yeuthich', [$controller, 'getWishList'])
             ->name('wishlist');
     });
+});
+
+Route::get('search', function(Request $request) {
+    // /api/search?keyword=*&page=0&sort=az&range=0-50
+    
+    $perPage = 16;
+    $keyword = $request->query('keyword');
+    $sort = $request->query('sort');
+    $range = explode('-', $request->query('range'));
+    if(count($range) == 2) {
+        $min = ((int) $range[0]) * 1000; 
+        $max = ((int) $range[1]) * 1000;
+    }
+    $query = Product::query();
+    
+    if($keyword === 'sales') {
+
+    }else if($keyword !== '*') {
+        $query = $query->where('name', 'like', "%{$keyword}%");
+    }
+
+    $query = match($sort) {
+        'banchay' => $query->orderByDesc(
+                        OrderItem::selectRaw('sum(quantity)')
+                        ->where('product_id','product.id')
+                    ),
+        'tenaz' => $query->orderBy('name', 'asc'),
+        'tenza' => $query->orderByDesc('name'),
+        'giathap' => $query->orderByRaw('IFNULL(event_price, discount_price) asc'),
+        'giacao' => $query->orderByRaw('IFNULL(event_price, discount_price) desc'),
+        default => $query
+    };
+    if($min) {
+        $query = $query->where(function($query) use($min) {
+            $query->where(function($query) use($min) {
+                $query->whereNotNull('event_price')->where('event_price','>=',$min);
+            })->orWhere(function($query) use($min) {
+                $query->whereNull('event_price')->where('discount_price','>=',$min);
+            });
+        });
+    }
+    if($max) {
+        $query = $query->where(function($query) use($max) {
+            $query->where(function($query) use($max) {
+                $query->whereNotNull('event_price')->where('event_price','<=',$max);
+            })->orWhere(function($query) use($max) {
+                $query->whereNull('event_price')->where('discount_price','<=',$max);
+            });
+        });
+    }
+
+    $products = $query->paginate($perPage);
+    return ProductResource::collection($products);
+
 });
 
 Route::get('test/{id}', function($id) {
