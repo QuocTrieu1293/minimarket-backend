@@ -40,7 +40,7 @@ class OrderController extends Controller
                 $sale_item = $product->sale_item;
                 if(($sale_item && $sale_item->remain >= $item->quantity) || (!$sale_item)) {
                     OrderItem::create([
-                        'unit_price' => $product->event_price, 
+                        'unit_price' => $product->getSalePrice(), //event_price 
                         'quantity' => $item->quantity, 
                         'order_id' => $order->id, 
                         'product_id' => $item->product_id, 
@@ -50,12 +50,13 @@ class OrderController extends Controller
                 }else {
                     //Phần khuyễn mãi
                     OrderItem::create([
-                        'unit_price' => $product->event_price, 
+                        'unit_price' => $product->getSalePrice(), //event_price 
                         'quantity' => $sale_item->remain, 
                         'order_id' => $order->id, 
                         'product_id' => $item->product_id, 
-                        'total_price' => $product->event_price * $sale_item->remain
-                    ]);
+                        'total_price' => $product->getSalePrice() * $sale_item->remain
+                                                //event_price
+                    ]); 
                     //Phần không được khuyễn mãi
                     OrderItem::create([
                         'unit_price' => $product->discount_price, 
