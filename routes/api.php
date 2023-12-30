@@ -57,7 +57,7 @@ Route::prefix('sanpham')->name('product.')->group(function() {
         Route::post('/xoa', [Client\ProductController::class, 'deleteWishlist'])
             ->name('delete-wishlist');
     });
-    Route::prefix('{id}')->group(function() {
+    Route::prefix('/{id}')->group(function() {
         Route::get('/',[Client\ProductController::class, 'getDetail'])
             ->name('detail');
         Route::get('lienquan',[Client\ProductController::class, 'getRelevants'])

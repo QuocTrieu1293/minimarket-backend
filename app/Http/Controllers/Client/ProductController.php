@@ -42,7 +42,10 @@ class ProductController extends Controller
             //         ->inRandomOrder()->take(5)->get();
             $products = Product::where('category_id',$category_id)->where('id','<>',$id)
                     ->inRandomOrder()->take(5)->get();
-            return response()->json(ProductResource::collection($products));
+            return [
+                'data' => ProductResource::collection($products),
+                'page' => 0,
+            ];
         }catch(Exception $e) {
             return response()->json(["error" => $e->getMessage()],404);
         }

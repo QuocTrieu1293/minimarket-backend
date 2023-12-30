@@ -20,7 +20,7 @@ class SaleItem extends Model
 
     protected $table = 'sale_item';
     public $timestamps = false;
-    protected $attributes = ['quantity' => 1, 'event_id' => 1];
+    protected $attributes = ['quantity' => 1, 'event_id' => 1, 'remain' => 0];
     protected $fillable = [
         'product_id', 'event_id', 'quantity', 'remain'
     ];

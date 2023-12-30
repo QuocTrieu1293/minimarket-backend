@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
     public function add(Request $request) {
         // userId, address, payment_method, note
-        try {
+        // try {
             $request->validate([
                 'userId' => 'required',
                 'address' => 'required',
@@ -71,10 +71,12 @@ class OrderController extends Controller
                     ]);
                 }
 
-                $sale_item->remain -= $item->quantity;
-                $sale_item->remain = max($sale_item->remain, 0);
-                $sale_item->save();
-                if($sale_item->remain === 0) {
+                if($sale_item && $sale_item->remain) {
+                    $sale_item->remain -= $item->quantity;
+                    $sale_item->remain = max($sale_item->remain, 0);
+                    $sale_item->save();
+                }
+                if($sale_item && $sale_item->remain === 0) {
                     $product->event_percent = null;
                     $product->event_price = null;
 
@@ -87,10 +89,10 @@ class OrderController extends Controller
             return [
                 'id' => $order->id,
             ];
-        }catch(Exception $e) {
-            $statusCode = ($e instanceof ValidationException) ? 422 : 404;
-            return response()->json(['error' => $e->getMessage()], $statusCode);
-        }
+        // }catch(Exception $e) {
+        //     $statusCode = ($e instanceof ValidationException) ? 422 : 404;
+        //     return response()->json(['error' => $e->getMessage()], $statusCode);
+        // }
     }
 
     public function get($id) {
