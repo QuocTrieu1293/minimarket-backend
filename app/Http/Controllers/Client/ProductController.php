@@ -96,7 +96,7 @@ class ProductController extends Controller
         $productId = [];
         foreach($categories as $category) {
             $record = [
-                'category_id' => $category->id,
+                'categoryID' => $category->id,
                 'name' => $category->name,
                 'category_group_id' => $category->category_group_id,
             ];

@@ -79,8 +79,8 @@ class CategoryGroupController extends Controller
             // $log = DB::getQueryLog();
             // $log = end($log);
             // dd($log);
-            return ProductResource::collection($query->paginate($perPage)); 
-            // return $query->paginate($perPage); 
+            $products = $query->paginate($perPage);
+            return ProductResource::collection($products);
         }catch(Exception $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         }

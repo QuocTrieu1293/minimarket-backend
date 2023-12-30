@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductResource extends JsonResource
 {
@@ -24,11 +25,23 @@ class ProductResource extends JsonResource
             'discount_price' => $this->getSalePrice(),
             'canonical' => $this->canonical,
             'quantity' => $this->quantity,
-            'remain' => ($this->sale_item) ? $this->sale_item->remain : null,
+            'remaining' => ($this->sale_item) ? $this->sale_item->remain : null,
             'rating' => $this->rating,
             'category_name' => $this->category->name,
-            'category_id' => $this->category_id,
+            'category_id' => $this->category_id,    
             'brand_id' => $this->brand_id,
         ];
+    }
+    public static function collection($resource)
+    {
+        // dd($resource->items());
+        if($resource instanceof LengthAwarePaginator) 
+            return [
+                'data' => array_map(fn($product) => new ProductResource($product),
+                                    (array)$resource->items()
+                                ),
+                'page' => $resource->lastPage()
+            ];
+        return $resource->map(fn($product) => new ProductResource($product));
     }
 }

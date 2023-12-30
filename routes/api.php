@@ -54,7 +54,7 @@ Route::prefix('sanpham')->name('product.')->group(function() {
     Route::prefix('/yeuthich')->group(function() {
         Route::post('/', [Client\ProductController::class, 'addWishlist'])
             ->name('add-wishlist');
-        Route::delete('/', [Client\ProductController::class, 'deleteWishlist'])
+        Route::post('/xoa', [Client\ProductController::class, 'deleteWishlist'])
             ->name('delete-wishlist');
     });
     Route::prefix('{id}')->group(function() {
@@ -68,7 +68,7 @@ Route::prefix('sanpham')->name('product.')->group(function() {
     
 });
 
-Route::prefix('sale')->name('sale-event.')->group(function() {
+Route::prefix('sales')->name('sale-event.')->group(function() {
     $controller = SaleEventController::class;
 
     Route::get('/', [$controller, 'getSaleEvent'])
@@ -153,13 +153,14 @@ Route::name('account.')->group(function() {
     });
 });
 
-Route::get('search', function(Request $request) {
+Route::get('/search', function(Request $request) {
     // /api/search?keyword=*&page=0&sort=az&range=0-50
     
     $perPage = 16;
     $keyword = $request->query('keyword');
     $sort = $request->query('sort');
     $range = explode('-', $request->query('range'));
+    $min = null; $max = null;
     if(count($range) == 2) {
         $min = ((int) $range[0]) * 1000; 
         $max = ((int) $range[1]) * 1000;
@@ -167,7 +168,7 @@ Route::get('search', function(Request $request) {
     $query = Product::query();
     
     if($keyword === 'sales') {
-
+        $query = $query->where('discount_percent', '>', 0)->orWhere('event_percent', '>', 0);
     }else if($keyword !== '*') {
         $query = $query->where('name', 'like', "%{$keyword}%");
     }
