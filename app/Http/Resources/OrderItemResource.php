@@ -18,7 +18,7 @@ class OrderItemResource extends JsonResource
         return [
             'itemId' => $this->id,
             'productId' => $this->product_id,
-            'name' => $this->product->name . (($this->from_event)?' [SỰ KIỆN KM]':''),
+            'name' => (($this->from_event)?' [SỰ KIỆN KM]':'') . $this->product->name,
             'thumbnail' => $this->product->thumbnail,
             'quantity' => $this->quantity,
             'total' => $this->total_price,
