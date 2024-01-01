@@ -14,7 +14,11 @@ class SaleItem extends Model
 
     protected static function booted() {
         static::addGlobalScope('visible', function(Builder $query) : void {
-            $query->has('product');
+            $query->has('product')->where(function($query) {
+                $query->whereNull('remain')->orWhere(function($query) {
+                    $query->whereNotNull('remain')->where('remain', '>', 0);
+                });
+            });
         });
     }
 
@@ -34,6 +38,8 @@ class SaleItem extends Model
     }
 
     public function product() : BelongsTo {
-        return $this->belongsTo(Product::class,'product_id','id');
+        return $this->belongsTo(Product::class,'product_id','id')
+                    ->whereNotNull('event_percent')
+                    ->whereNotNull('event_price');
     }
 }

@@ -49,7 +49,7 @@ class OrderController extends Controller
                             ($sale_item && $sale_item->remain >= $item->quantity) ? true : false
                     ]);
                     
-                }else {
+                }else if($sale_item->remain && $sale_item->remain > 0) {
                     //Phần khuyễn mãi
                     OrderItem::create([
                         'unit_price' => $product->getSalePrice(), //event_price 
