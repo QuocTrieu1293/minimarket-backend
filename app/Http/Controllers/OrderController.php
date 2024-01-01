@@ -30,7 +30,6 @@ class OrderController extends Controller
 
             $order = Order::create([
                 'address' => $request->address,
-                'total' => $cart->total, 
                 'note' => $request->note, 
                 'payment_method' => $request->payment_method, 
                 'user_id' => $request->userId

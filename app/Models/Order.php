@@ -14,7 +14,8 @@ class Order extends Model
     protected $table = '_order';
     public $timestamps = true;
     protected $attributes = [
-        'status' => 'pending'
+        'status' => 'pending',
+        'total' => 0,
     ];
     protected $fillable = [
         'address', 'total', 'note', 'payment_method', 'user_id'
