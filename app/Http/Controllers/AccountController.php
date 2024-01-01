@@ -52,14 +52,13 @@ class AccountController extends Controller
         try {
             $request->validate([
                 'email' => 'required|email|unique:users',
-                'password' => 'required|min:8',
-                'fullname' => 'required:'
+                'password' => 'required',
+                'fullname' => 'required'
             ],
             [
                 'email' => 'Sai định dạng email',
                 'required' => 'Bắt buộc nhập',
                 'unique' => 'Email đã tồn tại',
-                'password.min' => 'Mật khẩu tối thiểu 8 kí tự'
             ]);
             $user = User::create([
                 'name' => $request->fullname,

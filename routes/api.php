@@ -168,7 +168,9 @@ Route::get('/search', function(Request $request) {
     $query = Product::query();
     
     if($keyword === 'sales') {
-        $query = $query->where('discount_percent', '>', 0)->orWhere('event_percent', '>', 0);
+        $query = $query->where(function($query) {
+            $query->where('discount_percent', '>', 0)->orWhere('event_percent', '>', 0);
+        });
     }else if($keyword !== '*') {
         $query = $query->where('name', 'like', "%{$keyword}%");
     }
@@ -202,8 +204,12 @@ Route::get('/search', function(Request $request) {
             });
         });
     }
-
+    // DB::enableQueryLog();
     $products = $query->paginate($perPage);
+    // $log = DB::getQueryLog();
+    // $log = end($log);
+    // dd($log);
+
     return ProductResource::collection($products);
 
 });
