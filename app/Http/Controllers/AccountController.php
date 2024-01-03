@@ -29,7 +29,7 @@ class AccountController extends Controller
                 'required' => 'Bắt buộc nhập'
             ]);
         
-            $credentials = $request->only('email', 'password') + ['role' => 'customer'];
+            $credentials = $request->only('email', 'password') + ['role' => 'customer', 'is_enable' => true];
             // dd($credentials);
         
             if (Auth::attempt($credentials)) {

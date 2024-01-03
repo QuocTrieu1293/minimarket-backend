@@ -25,6 +25,7 @@ use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
 use Filament\Support\Enums\MaxWidth;
 use App\Filament\Resources\ProductResource\Widgets\ProductTableStatsOverview;
+use Filament\Pages\Auth\EditProfile;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -66,7 +67,7 @@ class AdminPanelProvider extends PanelProvider
             ->defaultAvatarProvider(BoringAvatarsProvider::class)
             ->passwordReset()
             ->emailVerification()
-            ->profile()
+            ->profile(EditProfile::class)
             ->font('Roboto', provider: GoogleFontProvider::class)
             ->brandName('Green Market')
             ->favicon(asset('images/favicon.png'))
@@ -82,10 +83,10 @@ class AdminPanelProvider extends PanelProvider
                     ->sort(1)
             ])
             ->userMenuItems([
-                MenuItem::make()
-                    ->label('Cài đặt')
-                    ->url('admin/setting')
-                    ->icon('heroicon-s-cog-8-tooth')
+                // MenuItem::make()
+                //     ->label('Cài đặt')
+                //     ->url('admin/setting')
+                //     ->icon('heroicon-s-cog-8-tooth')
             ])
             ;
         // dd($panel->getLoginRouteAction());

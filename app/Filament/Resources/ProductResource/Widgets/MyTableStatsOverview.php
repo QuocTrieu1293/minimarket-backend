@@ -9,12 +9,14 @@ use App\Models\Product;
 use Filament\Widgets\Concerns\InteractsWithPageTable;
 use App\Filament\Resources\ProductResource\Pages\ListProducts;
 use App\Models\Filament\ProductFilament;
+use Filament\Support\Colors\Color;
 
-class ProductTableStatsOverview extends BaseWidget
+class MyTableStatsOverview extends BaseWidget
 {
     use InteractsWithPageTable;
 
     protected static ?string $pollingInterval = null;
+    protected static bool $isLazy = false;
 
     protected function getTablePage(): string
     {
@@ -26,9 +28,15 @@ class ProductTableStatsOverview extends BaseWidget
     {
         return [
             // Stat::make('Tổng số sản phẩm', Product::count()),
-            MyStat::make('Tổng số sản phẩm', ProductFilament::count())
-            
-            ,MyStat::make('Đang hiển thị', $this->getPageTableQuery()->count())
+            // MyStat::make('Tổng số sản phẩm', ProductFilament::count())
+            Stat::make('Tổng số sản phẩm', $this->getTablePageInstance()->getTable()->getModel()::count())
+                ->icon('heroicon-s-cube')
+                ->color('primary')
+                ->chart([7, 2, 10, 3, 15, 4, 17])
+            ,Stat::make('Đang hiển thị', $this->getPageTableQuery()->count())
+                ->icon('heroicon-s-cube-transparent')
+                ->color(Color::Amber)
+                ->chart([12, 2, 10, 3, 15, 29, 12])
             
         ];
     }

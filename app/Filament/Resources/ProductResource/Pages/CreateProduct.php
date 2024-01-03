@@ -10,6 +10,8 @@ class CreateProduct extends CreateRecord
 {
     protected static string $resource = ProductResource::class;
 
+    protected static ?string $title = "Tạo sản phẩm mới";
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         if(empty($data['discount_percent'])) 

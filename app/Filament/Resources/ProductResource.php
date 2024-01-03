@@ -64,9 +64,10 @@ class ProductResource extends Resource
 {
     protected static ?string $model = ProductFilament::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
     protected static ?string $label = 'sản phẩm';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $navigationLabel = 'Sản phẩm';
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {

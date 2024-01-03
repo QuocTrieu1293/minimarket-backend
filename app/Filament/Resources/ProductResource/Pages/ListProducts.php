@@ -12,6 +12,8 @@ class ListProducts extends ListRecords
     use ExposesTableToWidgets;
 
     protected static string $resource = ProductResource::class;
+
+    protected static ?string $title = "Sản phẩm";
    
     protected function getHeaderActions(): array
     {
@@ -24,7 +26,7 @@ class ListProducts extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            ProductResource\Widgets\ProductTableStatsOverview::class
+            ProductResource\Widgets\MyTableStatsOverview::class
         ];
     }
 

@@ -40,7 +40,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     ];
 
     protected $attributes = [
-        "role" => "customer"
+        "role" => "customer",
+        'is_enable' => 1
     ];
 
     /**
@@ -61,6 +62,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_enable' => 'boolean'
     ];
 
     public function canAccessPanel(Panel $panel): bool

@@ -12,6 +12,8 @@ class EditProduct extends EditRecord
 {
     protected static string $resource = ProductResource::class;
 
+    protected static ?string $title = "Chỉnh sửa sản phẩm";
+
     protected function mutateFormDataBeforeFill(array $data): array
     {
         // dd($data);

@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = '_order';
     public $timestamps = true;
@@ -18,10 +19,11 @@ class Order extends Model
         'total' => 0,
     ];
     protected $fillable = [
-        'address', 'total', 'note', 'payment_method', 'user_id'
+        'address', 'total', 'note', 'payment_method', 'user_id', 'status'
     ];
     protected $casts = [
         'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'total' => 'float',
     ];
 
