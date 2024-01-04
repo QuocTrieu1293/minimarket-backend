@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 03, 2024 at 01:59 PM
+-- Generation Time: Jan 04, 2024 at 08:23 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -337,9 +337,9 @@ CREATE TABLE `gallery` (
 INSERT INTO `gallery` (`id`, `thumbnail`, `sort`, `product_id`) VALUES
 (6, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 1, 1),
 (7, 'https://cdn.tgdd.vn/Products/Images/8781/297350/bhx/nac-dam-heo-nhap-khau-dong-lanh-tui-500g-202211111014371522.jpg', 2, 1),
-(8, 'https://cdn.tgdd.vn/Products/Images/8781/297350/bhx/nac-dam-heo-nhap-khau-dong-lanh-500g-202307141308024732.jpg', 3, 1),
-(9, 'https://cdn.tgdd.vn/Products/Images/8645/198877/bhx/hat-nem-cao-cap-vi-nam-huong-maggi-goi-450g-202207291105505226.jpg', 4, 1),
-(10, 'https://cdn.tgdd.vn/Products/Images/8645/198877/bhx/sellingpoint.jpg', 5, 1),
+(8, 'https://cdn.tgdd.vn/Products/Images/8781/297350/bhx/nac-dam-heo-nhap-khau-dong-lanh-500g-202307141308024732.jpg', 5, 1),
+(9, 'https://cdn.tgdd.vn/Products/Images/8645/198877/bhx/hat-nem-cao-cap-vi-nam-huong-maggi-goi-450g-202207291105505226.jpg', 3, 1),
+(10, 'https://cdn.tgdd.vn/Products/Images/8645/198877/bhx/sellingpoint.jpg', 4, 1),
 (16, 'https://cdn.tgdd.vn/Products/Images/8781/319228/bhx/ba-roi-heo-nhap-khau-dong-lanh-500g-hat-nem-maggi-400g-202311201604013696.jpg', 16, 2),
 (17, 'https://cdn.tgdd.vn/Products/Images/8781/297349/bhx/ba-roi-heo-nhap-khau-dong-lanh-500gr-202306090838016447.jpg', 17, 2),
 (18, 'https://cdn.tgdd.vn/Products/Images/8781/297349/bhx/ba-roi-heo-nhap-khau-dong-lanh-500gr-202307141303033442.jpg', 18, 2),
@@ -8458,7 +8458,10 @@ INSERT INTO `order_item` (`id`, `unit_price`, `quantity`, `total_price`, `from_e
 (76, 19500.00, 1, 19500.00, 0, 34, 823),
 (77, 52000.00, 2, 104000.00, 0, 34, 6),
 (78, 99000.00, 1, 99000.00, 0, 34, 1001),
-(79, 150000.00, 1, 150000.00, 0, 34, 138);
+(79, 150000.00, 1, 150000.00, 0, 34, 138),
+(83, 42200.00, 3, 126600.00, 1, 36, 1),
+(84, 94950.00, 3, 284850.00, 0, 36, 1),
+(85, 32900.00, 1, 32900.00, 1, 36, 20);
 
 --
 -- Triggers `order_item`
@@ -8543,7 +8546,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `thumbnail`, `name`, `reg_price`, `discount_percent`, `discount_price`, `event_percent`, `event_price`, `quantity`, `unit`, `canonical`, `rating`, `description`, `article`, `is_featured`, `is_visible`, `created_at`, `updated_at`, `deleted_at`, `category_id`, `brand_id`) VALUES
-(1, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 'Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g', 105500.00, 10, 94950.00, 60, 42200.00, 69, 'gói', NULL, 5.0, 'Nạc dăm là phần nạc dăm mềm, có lớp mỡ mỏng, chứa nhiều axit amin cần thiết cho cơ thể, dùng làm nguyên liệu chế biến các món ăn hấp dẫn. Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g chất lượng, giàu dinh dưỡng, mang đến những món ăn ngon cho gia đình.', NULL, 1, 1, '2023-11-28 02:46:58', '2024-01-01 05:41:08', NULL, 1, 1),
+(1, 'https://cdn.tgdd.vn/Products/Images/8781/319229/bhx/nac-dam-heo-nhap-khau-500g-hat-nem-nam-huong-maggi-450g-dong-lanh-500g-202311201507328081.jpg', 'Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g', 105500.00, 10, 94950.00, 60, 42200.00, 69, 'gói', NULL, 5.0, 'Nạc dăm là phần nạc dăm mềm, có lớp mỡ mỏng, chứa nhiều axit amin cần thiết cho cơ thể, dùng làm nguyên liệu chế biến các món ăn hấp dẫn. Nạc dăm heo nhập khẩu 500g & hạt nêm nấm hương Maggi 450g chất lượng, giàu dinh dưỡng, mang đến những món ăn ngon cho gia đình.', NULL, 1, 1, '2023-11-28 02:46:58', '2024-01-04 04:36:48', NULL, 1, 1),
 (2, 'https://cdn.tgdd.vn/Products/Images/8781/319228/bhx/ba-roi-heo-nhap-khau-dong-lanh-500g-hat-nem-maggi-400g-202311201604013696.jpg', 'Ba rọi heo nhập khẩu 500g & hạt nêm Maggi 400g', 111500.00, 13, 97005.00, 15, 94775.00, 76, 'gói', '', 4.3, NULL, NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-29 21:42:03', NULL, 1, 1),
 (3, 'https://cdn.tgdd.vn/Products/Images/8781/297349/bhx/-202306211448544376.jpg', 'Ba rọi heo nhập khẩu 500g', 65000.00, 0, 65000.00, NULL, NULL, 69, 'túi', '500g', 5.0, 'Ba rọi heo nhập khẩu có da với tỉ lệ nạc mỡ tuyệt vời, thịt heo săn chắc ngọt nên luôn được các bà nội trợ ưa chuộng và tin dùng. Ba rọi heo nhập khẩu đông lạnh với phương pháp cấp đông hiện đại, giúp lưu giữ hương vị tự nhiên, mang đến những món ăn ngon cho gia đình.', NULL, 0, 0, '2023-11-28 02:46:58', '2024-01-01 04:12:27', NULL, 1, 1),
 (4, 'https://cdn.tgdd.vn/Products/Images/8781/314535/bhx/ba-roi-heo-nhap-khau-dong-lanh-300g-202309072143306697.jpg', 'Ba rọi heo nhập khẩu đông lạnh 300g', 40000.00, 0, 40000.00, NULL, NULL, 16, 'túi', '300g', 5.0, 'Ba rọi là phần thịt heo có tỉ lệ nạc mỡ cân đối, săn chắc, mềm ngọt nên được nhiều chị em nội trợ ưa chuộng lựa chọn cho bữa ăn gia đình. Ba rọi heo nhập khẩu đông lạnh được cấp đông theo phương pháp hiện đại giúp thịt vẫn giữ được hương vị vốn có.', NULL, 1, 1, '2023-11-28 02:46:58', '2023-12-29 21:32:47', NULL, 1, 1),
@@ -9848,7 +9851,7 @@ CREATE TABLE `sale_event` (
 --
 
 INSERT INTO `sale_event` (`id`, `name`, `description`, `start_time`, `end_time`, `is_visible`, `created_at`, `updated_at`) VALUES
-(1, 'ĐÓN GIAO THỪA SALE NGẬP TRÀN', 'Cùng chào mừng năm mới với sự kiện sale cuối năm diễn ra từ 29/12 đến 08/01\n', '2023-12-29 01:20:31', '2024-01-08 01:20:43', 1, '2023-12-28 18:20:01', '2024-01-01 04:33:07');
+(1, 'ĐÓN GIAO THỪA SALE NGẬP TRÀN', 'Cùng chào mừng năm mới với sự kiện sale cuối năm diễn ra từ 29/12 đến 29/01\n', '2023-12-29 01:20:31', '2024-02-29 01:20:43', 1, '2023-12-28 18:20:01', '2024-01-04 07:22:02');
 
 -- --------------------------------------------------------
 
@@ -9950,11 +9953,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `phone`, `address`, `avatar`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`, `role`, `is_enable`) VALUES
-(1, 'Quốc Triệu', 'admin@gmail.com', NULL, NULL, NULL, '', '$2y$12$fGejQnwYBOXva.XG5C81beubnAyhOnti1/Tf2eRd3NLWCfzo.zaIG', 'egYcj2OVTWkgI00Pl43F6UsYvmAnhIiNDJrRiFG2PBVjV1VMtzSqTDamncMf', '2023-12-07 12:54:12', '2023-12-07 12:54:12', NULL, 'admin', 1),
-(14, 'test account', 'testaccount@gmail.com', NULL, '0359924897', NULL, NULL, '$2y$12$p2t/3DS.pKEWZbzPBTbste7Gow09Cwjj/XsvhSB9yTDzVAt.JSvwm', NULL, '2024-01-01 05:38:59', '2024-01-01 20:39:40', NULL, 'customer', 1),
+(1, 'Quốc Triệu', 'admin@gmail.com', NULL, NULL, NULL, '', '$2y$12$fGejQnwYBOXva.XG5C81beubnAyhOnti1/Tf2eRd3NLWCfzo.zaIG', '1ga1aXhQ6PPbZjeXrj3FeK79Gyv9aBEPt7e7ZX9dSXWhhC8M6YNmtJiLKiWA', '2023-12-07 12:54:12', '2023-12-07 12:54:12', NULL, 'admin', 1),
+(14, 'test account', 'testaccount@gmail.com', NULL, NULL, NULL, NULL, '$2y$12$p2t/3DS.pKEWZbzPBTbste7Gow09Cwjj/XsvhSB9yTDzVAt.JSvwm', NULL, '2024-01-01 05:38:59', '2024-01-04 04:01:54', NULL, 'customer', 1),
 (15, 'Trương Công Quốc Triệu', '21522714@gm.uit.edu.vn', NULL, '0359924897', '178 Trần Hưng Đạo', NULL, '$2y$12$scwI6PTkvpI07fB0rE0xvehTG1ovYe93CZejo3FH4Xy7pBpY.HLxu', NULL, '2024-01-01 21:03:29', '2024-01-03 07:03:02', NULL, 'customer', 0),
 (16, 'Nguyễn Tiến Đạt', '21521943@gm.uit.edu.vn', NULL, NULL, NULL, NULL, '$2y$12$r5MaL/OVJTZiksvKIinysewUUc6hM3dGfZ/1KxyTChnUbxcvpm/hG', NULL, '2024-01-03 06:51:28', '2024-01-03 06:51:28', NULL, 'customer', 1),
-(17, 'Nguyễn Lý Đăng Khoa', '21522229@gm.uit.edu.vn', NULL, NULL, NULL, NULL, '$2y$12$Pw67qZo1xHB6FHytBOQo2.3Xduq/HAX9hw4YlE5XTtt2/RgbYMABu', NULL, '2024-01-03 08:04:49', '2024-01-03 08:04:49', NULL, 'customer', 1);
+(17, 'Nguyễn Lý Đăng Khoa', '21522229@gm.uit.edu.vn', NULL, NULL, '29 Trần Xuân Soạn', NULL, '$2y$12$Pw67qZo1xHB6FHytBOQo2.3Xduq/HAX9hw4YlE5XTtt2/RgbYMABu', NULL, '2024-01-03 08:04:49', '2024-01-03 08:04:49', NULL, 'customer', 1);
 
 --
 -- Triggers `users`
@@ -10004,10 +10007,11 @@ CREATE TABLE `_order` (
 --
 
 INSERT INTO `_order` (`id`, `address`, `total`, `note`, `status`, `payment_method`, `created_at`, `updated_at`, `deleted_at`, `user_id`) VALUES
-(30, 'số 8 đường Hàn Thuyên, Phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh', 530300.00, 'Giao lúc 12h trưa thứ 7 tuần này. Gọi điện 10 phút trước khi giao.', 'pending', 'COD', '2024-01-03 06:54:19', '2024-01-03 06:54:19', NULL, 16),
-(31, 'số 97 Hồ Hảo Hớn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', 632000.00, 'Giao chủ nhật trước 13h', 'shipped', 'COD', '2024-01-03 06:56:27', '2024-01-03 07:37:41', NULL, 16),
+(30, 'số 8 đường Hàn Thuyên, Phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh', 530300.00, 'Giao lúc 12h trưa thứ 7 tuần này. Gọi điện 10 phút trước khi giao.', 'cancelled', 'COD', '2024-01-03 06:54:19', '2024-01-04 02:28:23', NULL, 16),
+(31, 'số 97 Hồ Hảo Hớn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', 632000.00, 'Giao chủ nhật trước 13h', 'processing', 'COD', '2024-01-03 06:56:27', '2024-01-04 05:04:53', NULL, 16),
 (32, '178 Trần Hưng Đạo, Phường Nguyễn Cư Trinh, Quận 1, Thành phố Hồ Chí Minh', 969000.00, NULL, 'delivered', 'COD', '2024-01-03 06:59:47', '2024-01-03 07:42:41', NULL, 15),
-(34, '29 Trần Xuân Soạn, Phường Tân Phong, Quận 7, Thành phố Hồ Chí Minh', 519500.00, 'Chúc bạn một ngày tốt lành', 'pending', 'COD', '2024-01-03 08:12:01', '2024-01-03 08:12:01', NULL, 17);
+(34, '29 Trần Xuân Soạn, Phường Tân Phong, Quận 7, Thành phố Hồ Chí Minh', 519500.00, 'Chúc bạn một ngày tốt lành', 'shipped', 'COD', '2024-01-03 08:12:01', '2024-01-04 04:03:21', NULL, 17),
+(36, '123 ..., Xã Yên Phú, Huyện Lạc Sơn, Tỉnh Hoà Bình', 444350.00, NULL, 'pending', 'COD', '2024-01-04 03:01:43', '2024-01-04 05:04:47', NULL, 14);
 
 --
 -- Indexes for dumped tables
@@ -10178,13 +10182,13 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `cart_item`
 --
 ALTER TABLE `cart_item`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `category_group`
@@ -10208,7 +10212,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8935;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8936;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -10220,7 +10224,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -10274,7 +10278,7 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `_order`
 --
 ALTER TABLE `_order`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Constraints for dumped tables
