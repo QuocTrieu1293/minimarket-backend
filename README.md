@@ -1,66 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Overview
+GreenMart  aims to create a seamless and user-friendly online platform for customers to conveniently purchase a wide range of grocery products from the comfort of their homes. This project is driven by the increasing demand for online shopping and the need for a reliable and efficient solution for grocery shopping.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## Tech Stack
+* Laravel
+* Filament (a powerful, customizable admin panel for Laravel to quickly build your app's admin interfaces)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation 
+1. Make sure you've installed and setup:
+   - XAMP server / Wamp server
+   - PHP (recommend vars)
+   - Composer
+2. Run wamp or xampp server (run mysql and apache modules).
+3. Clone the repo to your local machine and place it in `htdocs` folder of xampp or wamp server (ex: `C:\xampp\htdocs\` or `C:\wamp\www\`).
+4. Go to `localhost/phpmyadmin`, create a new database named `dbminimarket` and import the sql file `file sql/dbminimarket.sql` of the repo to the database for creating tables and inserting data.
+5. In the repo folder location you have just cloned (ex: `C:\xampp\htdocs\minimarket-backend\`) -> Open cmd -> run `composer install` to install all dependencies.
+6. Check source files, go to `.env` , if there is only `.env.example` -> rename it to `.env`. In .env, change:
+   - Database connection:
+      ```
+      DB_CONNECTION=mysql 
+      DB_HOST=127.0.0.1 // your localhost 
+      DB_PORT=3306 
+      DB_DATABASE=dbminimarket // name of the database you have just created above
+      DB_USERNAME= root // your db username (usually root)
+      DB_PASSWORD= // your db password (usually empty)
+      ```
+   - Optionally, you can change the app name and turn laravel debug mode off for faster loading:
+      ```
+      APP_NAME='Green Market'
+      APP_DEBUG=false // false for faster loading
+      ```
+7. Run `php artisan key:generate` to generate the app key in `.env` file, for example:
+   ```
+   APP_KEY=base64:hLRDeP6kxVDqwM3bqc9AOd5mFxP39O9eut3O3Im6Ohw=
+   ```
+8. Run the command `php artisan storage:link` to create a symbolic link from "public/storage" to "storage/app/public". This is necessary for the product image upload functionality in the admin panel.
+9. Finally run `php artisan serve` to start the server. You can now access the admin page at `localhost:8000`. The default admin account is `admin@gmail.com` and password is `minimarket`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> To check api working for customer website, go to ***`localhost:8000/api/danhmuc`*** to see all category_group in json format.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+> All the pre-existing accounts in the ***`users`*** table of the database have **'`minimarket`'** as their password.
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Contact
+Team DVGs @2023
