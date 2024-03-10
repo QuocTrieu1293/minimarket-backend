@@ -79,8 +79,8 @@ class OrderController extends Controller
                     $product->event_percent = null;
                     $product->event_price = null;
 
-                    $product->timestamps = false;
-                    $product->save(); //ngăn không cập nhật trường updated_at
+                    $product->timestamps = false; //ngăn không cập nhật trường updated_at
+                    $product->save(); 
                     $product->timestamps = true;
                 }
             }

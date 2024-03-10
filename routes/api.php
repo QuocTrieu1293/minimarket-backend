@@ -165,7 +165,7 @@ Route::get('/search', function(Request $request) {
         $min = ((int) $range[0]) * 1000; 
         $max = ((int) $range[1]) * 1000;
     }
-    $query = Product::query();
+    $query = Product::inRandomOrder();
     
     if($keyword === 'sales') {
         $query = $query->where(function($query) {

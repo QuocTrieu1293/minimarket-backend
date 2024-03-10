@@ -89,7 +89,7 @@ class CategoryGroupController extends Controller
     public function getBrands($id) {
         try {
             
-            //Has Many Through: lấy tất cả products của một có trong một category group
+            //Has Many Through: lấy tất cả products có trong một category group
             $products = CategoryGroup::findOrFail($id)
             ->through('categories')->has('products')->get();
 
@@ -101,6 +101,6 @@ class CategoryGroupController extends Controller
     }
 
     public function randomCategoryGroups($id) {
-        return CategoryGroup::where('id','<>',$id)->take(4)->get();
+        return CategoryGroup::inRandomOrder()->where('id','<>',$id)->take(4)->get();
     }
 }

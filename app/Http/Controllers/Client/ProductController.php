@@ -85,12 +85,16 @@ class ProductController extends Controller
     }
 
     public function getPopulars() {
+        $category_cnt = 5;
+        $productsPerCategory_cnt = 24;
+        $minProductsPerCategory_cnt = 12;
         $categories = Category::withCount(['products' => function($query) {
             $query->where('is_featured',1);
-        }])->having('products_count','>',0)->orderBy('products_count','desc')->take(5)->get();
+        }])->having('products_count','>',0)->orderBy('products_count','desc')->take($category_cnt)->get();
         // dd($categories);
-        if($categories->count() < 5) {
-            $categories = $categories->concat(Category::has('products','>=',12)
+        if($categories->count() < $category_cnt) { //Trường hợp không đủ 5 category thì lấy thêm cho đủ
+            $categories = $categories->concat(Category::has('products','>=',$minProductsPerCategory_cnt)
+            ->whereNotIn('id', $categories->pluck('id')->toArray())
             ->inRandomOrder()
             ->take(5-($categories->count()))
             ->get());
@@ -103,13 +107,13 @@ class ProductController extends Controller
                 'name' => $category->name,
                 'category_group_id' => $category->category_group_id,
             ];
-            $products = $category->products()->orderBy('is_featured','desc')->take(20)->get();
+            $products = $category->products()->orderBy('is_featured','desc')->take($productsPerCategory_cnt)->get();
             $productId = array_merge($productId,$products->modelKeys());
-            if($products->count() < 20) {
+            if($products->count() < $minProductsPerCategory_cnt) {
                 $addProducts = Product::whereNotIn('id',$productId)
                                 ->whereNotIn('category_id',$categories->pluck('id'))
                                 ->inRandomOrder()
-                                ->take(20-($products->count()))
+                                ->take($minProductsPerCategory_cnt-($products->count()))
                                 ->get();
                 $products = $products->concat($addProducts);
                 $productId = array_merge($productId,$addProducts->modelKeys());
