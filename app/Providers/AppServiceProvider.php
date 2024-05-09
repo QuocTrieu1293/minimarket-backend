@@ -13,6 +13,7 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use Nette\Utils\ImageColor;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        if (env('APP_ENV') !== 'local') {
+            URL::forceScheme('https');
+        }
         Route::pattern('id', '\d+');
         Table::configureUsing(function (Table $table): void {
             $table
@@ -38,11 +43,11 @@ class AppServiceProvider extends ServiceProvider
                 ->persistSortInSession()
                 ->persistSearchInSession();
         });
-        Stack::configureUsing(function (Stack $stack) : void {
+        Stack::configureUsing(function (Stack $stack): void {
             $stack
                 ->space(2);
         });
-        ImageColumn::configureUsing(function (ImageColumn $column) : void {
+        ImageColumn::configureUsing(function (ImageColumn $column): void {
             $column
                 ->defaultImageUrl(asset('images/thumbnail_placeholder.jpg'))
                 ->extraImgAttributes([
@@ -51,14 +56,13 @@ class AppServiceProvider extends ServiceProvider
                     'class' => 'rounded-md'
                 ]);
         });
-        TextColumn::configureUsing(function (TextColumn $column) : void {
+        TextColumn::configureUsing(function (TextColumn $column): void {
             $column
                 ->size(TextColumn\TextColumnSize::Small)
-                ->weight(FontWeight::Medium)
-                ;
+                ->weight(FontWeight::Medium);
         });
 
-        ImageEntry::configureUsing(function (ImageEntry $entry) : void {
+        ImageEntry::configureUsing(function (ImageEntry $entry): void {
             $entry
                 ->defaultImageUrl(asset('images/thumbnail_placeholder.jpg'))
                 ->extraImgAttributes([
@@ -66,6 +70,5 @@ class AppServiceProvider extends ServiceProvider
                     'class' => 'rounded-md'
                 ]);
         });
-        
     }
 }
