@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
@@ -27,8 +28,12 @@ class AzureServiceProvider extends ServiceProvider
         Storage::extend('azure', function ($app, $config) {
             $connectionString = "DefaultEndpointsProtocol=https;AccountName=" . $config['name'] . ";AccountKey=" . $config['key'] . ";EndpointSuffix=core.windows.net";
             $client = BlobRestProxy::createBlobService($connectionString);
-
-            return new Filesystem(new AzureBlobStorageAdapter($client, (string)$config['container']));
+            $adapter = new AzureBlobStorageAdapter($client, (string)$config['container']);
+            return new FilesystemAdapter(
+                new Filesystem($adapter),
+                $adapter,
+                $config
+            );
         });
     }
 }
