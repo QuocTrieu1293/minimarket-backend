@@ -28,7 +28,7 @@ class AzureServiceProvider extends ServiceProvider
             $connectionString = "DefaultEndpointsProtocol=https;AccountName=" . $config['name'] . ";AccountKey=" . $config['key'] . ";EndpointSuffix=core.windows.net";
             $client = BlobRestProxy::createBlobService($connectionString);
 
-            return new Filesystem(new AzureBlobStorageAdapter($client, $config['container']));
+            return new Filesystem(new AzureBlobStorageAdapter($client, (string)$config['container']));
         });
     }
 }
