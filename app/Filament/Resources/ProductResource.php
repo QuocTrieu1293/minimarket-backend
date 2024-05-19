@@ -57,6 +57,7 @@ use Illuminate\Support\HtmlString;
 use Carbon\Carbon;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Contracts\HasTable;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 require_once app_path('MyHelper/helpers.php');
 
@@ -382,6 +383,9 @@ class ProductResource extends Resource
                                                         ->label('File ảnh')
                                                         ->validationAttribute('uploaded file')
                                                         ->image()
+                                                        ->getUploadedFileNameForStorageUsing(
+                                                            fn (TemporaryUploadedFile $file, ProductFilament $record): string => (string) "{$record->id}-" . date("dmYHis"),
+                                                        )
 
 
                                                 ])
