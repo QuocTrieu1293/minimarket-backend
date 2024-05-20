@@ -384,7 +384,8 @@ class ProductResource extends Resource
                                                         ->validationAttribute('uploaded file')
                                                         ->image()
                                                         ->getUploadedFileNameForStorageUsing(
-                                                            fn (TemporaryUploadedFile $file, ProductFilament $record): string => (string) "{$record->id}-" . date("dmYHis"),
+                                                            fn (TemporaryUploadedFile $file, ProductFilament $record): string =>
+                                                            (string) "product-{$record->id}-" . date("dmYHis") . ".{$file->getClientOriginalExtension()}"
                                                         )
 
 
@@ -395,7 +396,7 @@ class ProductResource extends Resource
                                                         // dd($data['imageFile']); //tên file upload
 
                                                         // $thumbnail = asset('storage/' . $data['imageFile']);
-                                                        $thumbnail = env('AZURE_STORAGE_URL') . '/' . $data['imageFile'];
+                                                        $thumbnail = env('AZURE_STORAGE_URL') . '/' . env('AZURE_STORAGE_CONTAINER') . '/' . $data['imageFile'];
                                                     } else {
                                                         $thumbnail = $data['url'];
                                                     }
