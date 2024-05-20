@@ -15,6 +15,7 @@ use App\Models\OrderItem;
 use App\Models\Wishlist;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -90,79 +91,83 @@ class ProductController extends Controller
 
     public function getPopulars()
     {
-        $category_cnt = 5;
-        $productsPerCategory_cnt = 24;
-        $minProductsPerCategory_cnt = 12;
-        $categories = Category::withCount(['products' => function ($query) {
-            $query->where('is_featured', 1);
-        }])->having('products_count', '>', 0)->orderBy('products_count', 'desc')->take($category_cnt)->get();
-        // dd($categories);
-        if ($categories->count() < $category_cnt) { //Trường hợp không đủ 5 category thì lấy thêm cho đủ
-            $categories = $categories->concat(Category::has('products', '>=', $minProductsPerCategory_cnt)
-                ->whereNotIn('id', $categories->pluck('id')->toArray())
-                ->inRandomOrder()
-                ->take(5 - ($categories->count()))
-                ->get());
-        }
-        $response = [];
-        $productId = [];
-        foreach ($categories as $category) {
-            $record = [
-                'categoryID' => $category->id,
-                'name' => $category->name,
-                'category_group_id' => $category->category_group_id,
-            ];
-            $products = $category->products()->orderBy('is_featured', 'desc')->take($productsPerCategory_cnt)->get();
-            $productId = array_merge($productId, $products->modelKeys());
-            if ($products->count() < $minProductsPerCategory_cnt) {
-                $addProducts = Product::whereNotIn('id', $productId)
-                    ->whereNotIn('category_id', $categories->pluck('id'))
+        return Cache::remember('popular_products', 60, function () {
+            $category_cnt = 5;
+            $productsPerCategory_cnt = 24;
+            $minProductsPerCategory_cnt = 12;
+            $categories = Category::withCount(['products' => function ($query) {
+                $query->where('is_featured', 1);
+            }])->having('products_count', '>', 0)->orderBy('products_count', 'desc')->take($category_cnt)->get();
+            // dd($categories);
+            if ($categories->count() < $category_cnt) { //Trường hợp không đủ 5 category thì lấy thêm cho đủ
+                $categories = $categories->concat(Category::has('products', '>=', $minProductsPerCategory_cnt)
+                    ->whereNotIn('id', $categories->pluck('id')->toArray())
                     ->inRandomOrder()
-                    ->take($minProductsPerCategory_cnt - ($products->count()))
-                    ->get();
-                $products = $products->concat($addProducts);
-                $productId = array_merge($productId, $addProducts->modelKeys());
+                    ->take(5 - ($categories->count()))
+                    ->get());
             }
+            $response = [];
+            $productId = [];
+            foreach ($categories as $category) {
+                $record = [
+                    'categoryID' => $category->id,
+                    'name' => $category->name,
+                    'category_group_id' => $category->category_group_id,
+                ];
+                $products = $category->products()->orderBy('is_featured', 'desc')->take($productsPerCategory_cnt)->get();
+                $productId = array_merge($productId, $products->modelKeys());
+                if ($products->count() < $minProductsPerCategory_cnt) {
+                    $addProducts = Product::whereNotIn('id', $productId)
+                        ->whereNotIn('category_id', $categories->pluck('id'))
+                        ->inRandomOrder()
+                        ->take($minProductsPerCategory_cnt - ($products->count()))
+                        ->get();
+                    $products = $products->concat($addProducts);
+                    $productId = array_merge($productId, $addProducts->modelKeys());
+                }
 
-            // $record['products'] = $products->map(function($product){
-            //     return $product->only(ProductController::attributes);
-            // });
-            // ---------------------------------------------------------------
-            $record['products'] = ProductResource::collection($products);
+                // $record['products'] = $products->map(function($product){
+                //     return $product->only(ProductController::attributes);
+                // });
+                // ---------------------------------------------------------------
+                $record['products'] = ProductResource::collection($products);
 
-            $response[] = $record;
-        }
-        return response()->json($response);
+                $response[] = $record;
+            }
+            return response()->json($response);
+        });
     }
 
     public function getBestSells()
     {
-        $cnt = 6;
-        $query = Product::withSum('order_items as total_sell', 'quantity')
-            ->orderByDesc('total_sell')
-            ->orderByDesc('created_at')
-            ->take($cnt * 3);
-        $noibat = $query->take($cnt)->get();
-        $hangmoi = $query->orderByDesc('created_at')->take($cnt)->get();
-        $phobien = $query->whereNotIn('id', array_merge($noibat->modelKeys(), $hangmoi->modelKeys()))
-            ->take($cnt)->get();
-        return [
-            [
-                'type' => 'Nổi bật',
-                'query' => 'noibat',
-                'products' => ProductResource::collection($noibat)
-            ],
-            [
-                'type' => 'Phổ biến',
-                'query' => 'phobien',
-                'products' => ProductResource::collection($phobien)
-            ],
-            [
-                'type' => 'Hàng mới',
-                'query' => 'hangmoi',
-                'products' => ProductResource::collection($hangmoi)
-            ]
-        ];
+        return Cache::remember('best_sell_products', 60, function () {
+            $cnt = 6;
+            $query = Product::withSum('order_items as total_sell', 'quantity')
+                ->orderByDesc('total_sell')
+                ->orderByDesc('created_at')
+                ->take($cnt * 3);
+            $noibat = $query->take($cnt)->get();
+            $hangmoi = $query->orderByDesc('created_at')->take($cnt)->get();
+            $phobien = $query->whereNotIn('id', array_merge($noibat->modelKeys(), $hangmoi->modelKeys()))
+                ->take($cnt)->get();
+            return [
+                [
+                    'type' => 'Nổi bật',
+                    'query' => 'noibat',
+                    'products' => ProductResource::collection($noibat)
+                ],
+                [
+                    'type' => 'Phổ biến',
+                    'query' => 'phobien',
+                    'products' => ProductResource::collection($phobien)
+                ],
+                [
+                    'type' => 'Hàng mới',
+                    'query' => 'hangmoi',
+                    'products' => ProductResource::collection($hangmoi)
+                ]
+            ];
+        });
     }
 
     public function search(Request $request)

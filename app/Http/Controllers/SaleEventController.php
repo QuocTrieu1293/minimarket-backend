@@ -17,6 +17,8 @@ class SaleEventController extends Controller
             if (!$event) {
                 $event = SaleEvent::findOrFail(1);
                 Redis::setex('sale_event', 60, serialize($event));
+            } else {
+                $event = unserialize($event);
             }
             $response = [
                 'id' => 1,
