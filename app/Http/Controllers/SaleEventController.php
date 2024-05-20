@@ -47,7 +47,7 @@ class SaleEventController extends Controller
                     $event = unserialize($event);
                 }
                 $saleItems = $event->sale_items->map(fn ($item) => $item->product);
-                Redis::setex($saleItems, 30, serialize($saleItems));
+                Redis::setex('sale_items', 30, serialize($saleItems));
             } else {
                 $saleItems = unserialize($saleItems);
             }

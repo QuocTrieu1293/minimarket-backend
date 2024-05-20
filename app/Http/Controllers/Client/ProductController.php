@@ -16,6 +16,7 @@ use App\Models\Wishlist;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -91,7 +92,8 @@ class ProductController extends Controller
 
     public function getPopulars()
     {
-        return Cache::remember('popular_products', 60, function () {
+        $response = Redis::get('popular_products');
+        if (!$response) {
             $category_cnt = 5;
             $productsPerCategory_cnt = 24;
             $minProductsPerCategory_cnt = 12;
@@ -134,13 +136,16 @@ class ProductController extends Controller
 
                 $response[] = $record;
             }
-            return response()->json($response);
-        });
+            Redis::setex('popular_products', 60, json_encode($response));
+        }
+
+        return $response;
     }
 
     public function getBestSells()
     {
-        return Cache::remember('best_sell_products', 60, function () {
+        $response = Redis::get('best_sell');
+        if (!$response) {
             $cnt = 6;
             $query = Product::withSum('order_items as total_sell', 'quantity')
                 ->orderByDesc('total_sell')
@@ -150,7 +155,7 @@ class ProductController extends Controller
             $hangmoi = $query->orderByDesc('created_at')->take($cnt)->get();
             $phobien = $query->whereNotIn('id', array_merge($noibat->modelKeys(), $hangmoi->modelKeys()))
                 ->take($cnt)->get();
-            return [
+            $response = [
                 [
                     'type' => 'Nổi bật',
                     'query' => 'noibat',
@@ -167,7 +172,9 @@ class ProductController extends Controller
                     'products' => ProductResource::collection($hangmoi)
                 ]
             ];
-        });
+            Redis::setex('best_sell', 60, json_encode($response));
+        }
+        return $response;
     }
 
     public function search(Request $request)
