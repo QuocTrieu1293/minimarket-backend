@@ -384,8 +384,8 @@ class ProductResource extends Resource
                                                         ->validationAttribute('uploaded file')
                                                         ->image()
                                                         ->getUploadedFileNameForStorageUsing(
-                                                            fn (TemporaryUploadedFile $file, ProductFilament $record): string =>
-                                                            (string) "product-{$record->id}-" . date("dmYHis") . ".{$file->getClientOriginalExtension()}"
+                                                            fn (TemporaryUploadedFile $file, ?ProductFilament $record): string =>
+                                                            (string) "product-" . ($record ? $record->id : "new") . "-" . date("dmYHis") . ".{$file->getClientOriginalExtension()}"
                                                         )
 
 
