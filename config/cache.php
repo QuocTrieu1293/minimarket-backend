@@ -76,8 +76,31 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => 'cache',
-            'lock_connection' => 'default',
+            // 'connection' => 'cache',
+            // 'lock_connection' => 'default',
+            'client' => 'predis',
+            'cluster' => env('REDIS_CLUSTER', false),
+            'clusters' => [
+                'default' => [
+                    [
+                        'scheme'   => env('REDIS_SCHEME', 'tcp'),
+                        'host'     => env('REDIS_HOST', 'localhost'),
+                        'password' => env('REDIS_PASSWORD', null),
+                        'port'     => env('REDIS_PORT', 6379),
+                        'database' => env('REDIS_DATABASE', 0),
+                    ],
+                ],
+                'options' => [
+                    'cluster' => 'redis',
+                ]
+            ],
+            'options' => [
+                'parameters' => [
+                    'password' => env('REDIS_PASSWORD', null),
+                    'scheme'   => env('REDIS_SCHEME', 'tcp'),
+                ],
+                'ssl'    => ['verify_peer' => false],
+            ]
         ],
 
         'dynamodb' => [
@@ -106,6 +129,6 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache_'),
 
 ];

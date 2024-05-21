@@ -16,7 +16,7 @@ class SaleEventController extends Controller
             $event = Redis::get('sale_event');
             if (!$event) {
                 $event = SaleEvent::findOrFail(1);
-                Redis::setex('sale_event', 60, serialize($event));
+                Redis::setex('sale_event', 300, serialize($event));
             } else {
                 $event = unserialize($event);
             }
@@ -42,12 +42,12 @@ class SaleEventController extends Controller
                 $event = Redis::get('sale_event');
                 if (!$event) {
                     $event = SaleEvent::findOrFail(1);
-                    Redis::setex('sale_event', 60, serialize($event));
+                    Redis::setex('sale_event', 300, serialize($event));
                 } else {
                     $event = unserialize($event);
                 }
                 $saleItems = $event->sale_items->map(fn ($item) => $item->product);
-                Redis::setex('sale_items', 30, serialize($saleItems));
+                Redis::setex('sale_items', 300, serialize($saleItems));
             } else {
                 $saleItems = unserialize($saleItems);
             }

@@ -18,7 +18,7 @@ class CategoryGroupController extends Controller
         $cateGroups = Redis::get('category_groups');
         if (!$cateGroups) {
             $cateGroups = CategoryGroup::all();
-            Redis::setex('category_groups', 60, serialize($cateGroups));
+            Redis::setex('category_groups', 300, serialize($cateGroups));
         } else {
             $cateGroups = unserialize($cateGroups);
         }

@@ -136,7 +136,7 @@ class ProductController extends Controller
 
                 $response[] = $record;
             }
-            Redis::setex('popular_products', 60, json_encode($response));
+            Redis::setex('popular_products', 300, json_encode($response));
         }
 
         return $response;
@@ -172,7 +172,7 @@ class ProductController extends Controller
                     'products' => ProductResource::collection($hangmoi)
                 ]
             ];
-            Redis::setex('best_sell', 60, json_encode($response));
+            Redis::setex('best_sell', 300, json_encode($response));
         }
         return $response;
     }
