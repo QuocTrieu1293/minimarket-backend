@@ -1,6 +1,7 @@
 ## Overview
 GreenMart aims to create a seamless and user-friendly online platform for customers to conveniently purchase a wide range of grocery products from the comfort of their homes. This project is driven by the increasing demand for online shopping and the need for a reliable and efficient solution for grocery shopping.
 
+* Api doc link: https://documenter.getpostman.com/view/31952485/2sA2xh3tEb
 
 ## Tech Stack
 * Laravel
